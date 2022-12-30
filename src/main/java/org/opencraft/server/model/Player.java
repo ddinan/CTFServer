@@ -128,7 +128,7 @@ public class Player extends Entity {
   private final PlayerUI ui;
   public Position safePosition = new Position(0, 0, 0);
   private int currentRoundPoints = Constants.INITIAL_PLAYER_POINTS;
-  private String activeLevel;
+  public String activeLevel;
 
   // CTF
   public final LinkedList<Mine> mines = new LinkedList<Mine>();
@@ -852,7 +852,6 @@ public class Player extends Entity {
 
   public void moveToLevel(Level level) {
     assert level != null;
-    activeLevel = level.id;
 
     for (int id : level.usedSolidTypes) {
       this.getActionSender().sendBlockPermissions(id, true, true);

@@ -61,6 +61,11 @@ public class RocketCommand implements Command {
   }
 
   public void execute(final Player player, CommandParameters params) {
+    if (!player.activeLevel.equals(World.getWorld().getLevel().id)) {
+      player.getActionSender().sendChatMessage("You must be in the game's active level to use this command");
+      return;
+    }
+
     Thread rocketThread;
     rocketThread =
         new Thread(

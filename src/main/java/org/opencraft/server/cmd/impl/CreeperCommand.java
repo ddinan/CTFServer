@@ -57,6 +57,11 @@ public class CreeperCommand implements Command {
   }
 
   public void execute(Player player, CommandParameters params) {
+    if (!player.activeLevel.equals(World.getWorld().getLevel().id)) {
+      player.getActionSender().sendChatMessage("You must be in the game's active level to use this command");
+      return;
+    }
+
     if (GameSettings.getBoolean("Tournament")) {
       player.getActionSender().sendChatMessage("- &e/cr is disabled during the tournament.");
       return;

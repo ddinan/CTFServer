@@ -107,7 +107,7 @@ public abstract class GameMode {
     registerCommand("force", ForceCommand.getCommand());
     registerCommand("freeze", FreezeCommand.getCommand());
     registerCommand("g", GlobalChatCommand.getCommand());
-    registerCommand("help", TutorialCommand.getCommand());
+    registerCommand("help", HelpCommand.getCommand());
     registerCommand("helpop", HelpOpCommand.getCommand());
     registerCommand("hidden", HiddenCommand.getCommand());
     registerCommand("hide", HideCommand.getCommand());

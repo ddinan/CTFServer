@@ -56,6 +56,11 @@ public class FlagDropCommand implements Command {
   }
 
   public void execute(Player player, CommandParameters params) {
+    if (!player.activeLevel.equals(World.getWorld().getLevel().id)) {
+      player.getActionSender().sendChatMessage("You must be in the game's active level to use this command");
+      return;
+    }
+
     ((CTFGameMode)World.getWorld()
         .getGameMode())
         .dropFlag(player, false, true);

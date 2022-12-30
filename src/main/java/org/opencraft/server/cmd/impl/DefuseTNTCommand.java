@@ -54,6 +54,11 @@ public class DefuseTNTCommand implements Command {
   }
 
   public void execute(Player player, CommandParameters params) {
+    if (!player.activeLevel.equals(World.getWorld().getLevel().id)) {
+      player.getActionSender().sendChatMessage("You must be in the game's active level to use this command");
+      return;
+    }
+
     player.hasTNT = false;
     World.getWorld().getLevel().setBlock(player.tntX, player.tntY, player.tntZ, 0);
     player.tntX = 0;

@@ -40,6 +40,7 @@ import org.opencraft.server.cmd.Command;
 import org.opencraft.server.cmd.CommandParameters;
 import org.opencraft.server.game.impl.GameSettings;
 import org.opencraft.server.model.Player;
+import org.opencraft.server.model.World;
 
 /**
  * Official /deop command **NEEDS PERSISTENCE
@@ -64,6 +65,11 @@ public class DuelCommand implements Command {
 
   @Override
   public void execute(final Player player, CommandParameters params) {
+    if (!player.activeLevel.equals(World.getWorld().getLevel().id)) {
+      player.getActionSender().sendChatMessage("You must be in the game's active level to use this command");
+      return;
+    }
+
     if (!GameSettings.getBoolean("Tournament")) {
       if (params.getArgumentCount() == 0) player.getActionSender().sendChatMessage("/duel [name]");
       else {

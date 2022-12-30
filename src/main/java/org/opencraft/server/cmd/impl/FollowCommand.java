@@ -40,6 +40,7 @@ import org.opencraft.server.Server;
 import org.opencraft.server.cmd.Command;
 import org.opencraft.server.cmd.CommandParameters;
 import org.opencraft.server.model.Player;
+import org.opencraft.server.model.World;
 
 public class FollowCommand implements Command {
 
@@ -56,6 +57,11 @@ public class FollowCommand implements Command {
 
   @Override
   public void execute(Player player, CommandParameters params) {
+    if (!player.activeLevel.equals(World.getWorld().getLevel().id)) {
+      player.getActionSender().sendChatMessage("You must be in the game's active level to use this command");
+      return;
+    }
+
     if (player.isOp()) {
       if (player.team == -1) {
         if (params.getArgumentCount() == 1) {

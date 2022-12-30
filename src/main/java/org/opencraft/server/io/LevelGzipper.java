@@ -77,6 +77,8 @@ public final class LevelGzipper {
       session.getActionSender().sendHackControl(true);
     }
 
+    session.getPlayer().activeLevel = level.id;
+
     final int width = level.getWidth();
     final int height = level.getHeight();
     final int depth = level.getDepth();

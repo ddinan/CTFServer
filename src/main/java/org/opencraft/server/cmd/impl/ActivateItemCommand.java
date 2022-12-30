@@ -42,6 +42,7 @@ import org.opencraft.server.cmd.CommandParameters;
 import org.opencraft.server.game.impl.GameSettings;
 import org.opencraft.server.model.Player;
 import org.opencraft.server.model.StoreItem;
+import org.opencraft.server.model.World;
 
 public class ActivateItemCommand implements Command {
   private StoreItem item = null;
@@ -53,6 +54,11 @@ public class ActivateItemCommand implements Command {
 
   @Override
   public void execute(Player player, CommandParameters params) {
+    if (!player.activeLevel.equals(World.getWorld().getLevel().id)) {
+      player.getActionSender().sendChatMessage("You must be in the game's active level to use this command");
+      return;
+    }
+
     if (!GameSettings.getBoolean("EnableStore"))
       player.getActionSender().sendChatMessage("- &eThe store is disabled");
     else if (player.team == -1)

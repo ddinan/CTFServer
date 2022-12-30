@@ -66,6 +66,7 @@ public class TeleportCommand implements Command {
       if (params.getArgumentCount() == 1) {
         Player other = Player.getPlayer(params.getStringArgument(0), player.getActionSender());
         if (other != null) {
+          // TODO: Check if player is in the same world
           player.getActionSender().sendTeleport(other.getPosition(), other.getRotation());
           player.setPosition(other.getPosition());
           player.setRotation(other.getRotation());
