@@ -38,9 +38,7 @@ package org.opencraft.server.cmd.impl;
 
 import org.opencraft.server.cmd.Command;
 import org.opencraft.server.cmd.CommandParameters;
-import org.opencraft.server.model.Player;
-import org.opencraft.server.model.Position;
-import org.opencraft.server.model.Rotation;
+import org.opencraft.server.model.*;
 
 /**
  * Official /setspawn command
@@ -63,19 +61,21 @@ public class SetspawnCommand implements Command {
 
   @Override
   public void execute(Player player, CommandParameters params) {
-    // Player using command is OP?
     if (player.isOp()) {
       Position position = player.getPosition().toBlockPos();
       Rotation rotation = player.getRotation();
+
+      Level level = MapController.getLevel(player.activeLevel);
+
       if (params.getArgumentCount() == 0 || params.getStringArgument(0).equals("spec")) {
-        MapSetCommand.doPropertyChange("spawnPosition", position.toString());
-        MapSetCommand.doPropertyChange("spawnRotation", rotation.toString());
+        MapSetCommand.doPropertyChange("spawnPosition", position.toString(), level);
+        MapSetCommand.doPropertyChange("spawnRotation", rotation.toString(), level);
       } else if(params.getStringArgument(0).equals("red")) {
-        MapSetCommand.doPropertyChange("redSpawnPosition", position.toString());
-        MapSetCommand.doPropertyChange("redSpawnRotation", rotation.toString());
+        MapSetCommand.doPropertyChange("redSpawnPosition", position.toString(), level);
+        MapSetCommand.doPropertyChange("redSpawnRotation", rotation.toString(), level);
       } else {
-        MapSetCommand.doPropertyChange("blueSpawnPosition", position.toString());
-        MapSetCommand.doPropertyChange("blueSpawnRotation", rotation.toString());
+        MapSetCommand.doPropertyChange("blueSpawnPosition", position.toString(), level);
+        MapSetCommand.doPropertyChange("blueSpawnRotation", rotation.toString(), level);
       }
     } else player.getActionSender().sendChatMessage("You must be OP to do that");
   }
