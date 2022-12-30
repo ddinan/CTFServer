@@ -65,8 +65,7 @@ public final class LevelGzipper {
     return INSTANCE;
   }
 
-  public void gzipLevel(final MinecraftSession session) {
-    final Level level = World.getWorld().getLevel();
+  public void gzipLevel(final MinecraftSession session, Level level) {
     if (session.levelSent) {
       session
           .getActionSender()
@@ -77,6 +76,7 @@ public final class LevelGzipper {
               session.getPlayer().isOp());
       session.getActionSender().sendHackControl(true);
     }
+
     final int width = level.getWidth();
     final int height = level.getHeight();
     final int depth = level.getDepth();
@@ -102,7 +102,7 @@ public final class LevelGzipper {
                 session.getActionSender().sendMapAspect();
               if (session.isExtensionSupported("EnvColors"))
                 session.getActionSender().sendMapColors();
-              session.getActionSender().sendLevelFinish();
+              session.getActionSender().sendLevelFinish(level);
 
               for (int id : level.usedSolidTypes) {
                 session.getActionSender().sendBlockPermissions(id, false, false);
