@@ -76,7 +76,7 @@ public class MapEnvironmentCommand implements Command {
       setColorProperty("diffuseColor", colors[3], level);
       setColorProperty("ambientColor", colors[4], level);
       for (Player p : World.getWorld().getPlayerList().getPlayers()) {
-        p.getActionSender().sendMapColors();
+        p.getActionSender().sendMapColors(level);
       }
     } else {
       player.getActionSender().sendChatMessage("You must be OP to do that");

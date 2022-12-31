@@ -437,8 +437,7 @@ public class ActionSender {
     }
   }
 
-  public void sendMapAspect() {
-    Level level = World.getWorld().getLevel();
+  public void sendMapAspect(Level level) {
     String texturePack;
     String server = Configuration.getConfiguration().isTest() ? "127.0.0.1" : "168.235.81.79";
     if (level.props.getProperty("texturepack") != null) {
@@ -486,8 +485,7 @@ public class ActionSender {
     session.send(bldr.toPacket());
   }
 
-  public void sendMapColors() {
-    Level level = World.getWorld().getLevel();
+  public void sendMapColors(Level level) {
     short[][] colors = level.colors;
     for (int i = 0; i < colors.length; i++) {
       if (colors[i][0] == -1) {
