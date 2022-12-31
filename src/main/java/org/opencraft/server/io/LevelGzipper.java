@@ -65,7 +65,7 @@ public final class LevelGzipper {
     return INSTANCE;
   }
 
-  public void gzipLevel(final MinecraftSession session, Level level) {
+  public void gzipLevel(final MinecraftSession session, Level level, boolean switchingWorlds) {
     if (session.levelSent) {
       session
           .getActionSender()
@@ -104,7 +104,7 @@ public final class LevelGzipper {
                 session.getActionSender().sendMapAspect(level);
               if (session.isExtensionSupported("EnvColors"))
                 session.getActionSender().sendMapColors(level);
-              session.getActionSender().sendLevelFinish(level);
+              session.getActionSender().sendLevelFinish(level, switchingWorlds);
 
               for (int id : level.usedSolidTypes) {
                 session.getActionSender().sendBlockPermissions(id, false, false);

@@ -248,11 +248,13 @@ public abstract class GameMode {
             }
           });
     }
+
     WebServer.sendDiscordMessage(player.getName() + " joined the game", null);
 
     player.setAttribute("ip", player.getSession().getIP());
     player.muted = Server.isMuted(player.getName());
     String rank;
+
     try {
       int r = Integer.parseInt(player.getAttribute("rank").toString());
       if (r != 0) {
@@ -263,7 +265,9 @@ public abstract class GameMode {
     } catch (Exception ex) {
       rank = "";
     }
+
     World.getWorld().broadcast("&a" + player.getName() + " joined the game" + rank);
+
     if (!player.getSession().ccUser) {
       player
           .getActionSender()
@@ -271,6 +275,7 @@ public abstract class GameMode {
               "-- &bWe recommend using the &aClassiCube &bclient"
                   + " (www.classicube.net) for more features.");
     }
+
     if (player.getSession().isExtensionSupported("MessageTypes")) {
       synchronized (killFeed) {
         World.getWorld().getGameMode().sendKillFeed(player);

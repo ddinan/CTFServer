@@ -141,15 +141,6 @@ public final class World {
     return playerList;
   }
 
-  public void addPlayer(Player p) {
-    playerList.add(p);
-  }
-
-  public void removePlayer(Player p) {
-    playerList.remove(p);
-    // TODO: Leave if on a team
-  }
-
   /**
    * Gets the level.
    *
@@ -172,7 +163,7 @@ public final class World {
     level = l;
     BlockLog.clear();
     for (Player player : World.getWorld().getPlayerList().getPlayers()) {
-      LevelGzipper.getLevelGzipper().gzipLevel(player.getSession(), level);
+      LevelGzipper.getLevelGzipper().gzipLevel(player.getSession(), level, true);
     }
   }
 
@@ -263,7 +254,7 @@ public final class World {
       return;
     }
     session.getActionSender().sendHackControl(true);
-    LevelGzipper.getLevelGzipper().gzipLevel(session, level);
+    LevelGzipper.getLevelGzipper().gzipLevel(session, level, false);
   }
 
   /**
@@ -286,7 +277,7 @@ public final class World {
    *
    * @param session The session.
    */
-  public void completeRegistration(MinecraftSession session) {
+  public void completeRegistration(MinecraftSession session, boolean switchingWorlds) {
     if (!session.isAuthenticated()) {
       session.close();
       return;
@@ -299,7 +290,7 @@ public final class World {
     }
 
     // Notify game mode
-    World.getWorld().getGameMode().playerConnected(session.getPlayer());
+    if (!switchingWorlds) World.getWorld().getGameMode().playerConnected(session.getPlayer());
 
     if (!session.levelSent && session.isExtensionSupported("HeldBlock")) {
       session.getActionSender().sendHotbar((short) Constants.BLOCK_TNT, 0);

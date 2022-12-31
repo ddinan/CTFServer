@@ -130,7 +130,7 @@ public class ActionSender {
   }
 
   /** Sends the level finish packet. */
-  public void sendLevelFinish(Level level) {
+  public void sendLevelFinish(Level level, boolean switchingWorlds) {
     TaskQueue.getTaskQueue()
         .push(
             new Task() {
@@ -167,7 +167,7 @@ public class ActionSender {
                       .queuePersistenceRequest(new LoadPersistenceRequest(session.getPlayer()));
 
                   session.setReady();
-                  World.getWorld().completeRegistration(session);
+                  World.getWorld().completeRegistration(session, switchingWorlds);
                 } catch (Exception ex) {
                   Server.log(ex);
                 }

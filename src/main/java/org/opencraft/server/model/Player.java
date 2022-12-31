@@ -866,7 +866,7 @@ public class Player extends Entity {
       this.getActionSender().sendRemoveBlockDefinition(blockDef.id);
     }
 
-    LevelGzipper.getLevelGzipper().gzipLevel(session, level);
+    LevelGzipper.getLevelGzipper().gzipLevel(session, level, true);
   }
 
   /**
