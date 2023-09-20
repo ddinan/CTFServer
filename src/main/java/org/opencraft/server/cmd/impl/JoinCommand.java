@@ -40,6 +40,7 @@ import org.opencraft.server.cmd.Command;
 import org.opencraft.server.cmd.CommandParameters;
 import org.opencraft.server.game.impl.GameSettings;
 import org.opencraft.server.model.Player;
+import org.opencraft.server.model.World;
 
 public class JoinCommand implements Command {
 
@@ -57,11 +58,16 @@ public class JoinCommand implements Command {
 
   @Override
   public void execute(Player player, CommandParameters params) {
+    if (!player.activeLevel.equals(World.getWorld().getLevel().id)) {
+      player.getActionSender().sendChatMessage("You must be in the game's active level to use this command");
+      return;
+    }
+
     if (!GameSettings.getBoolean("Tournament")) {
       if (params.getArgumentCount() == 1) player.joinTeam(params.getStringArgument(0));
       else player.autoJoinTeam();
     } else {
-      player.getActionSender().sendChatMessage("Tournament in progress, please come back later. If you are participating an OP will place you on a team.");
+      player.getActionSender().sendChatMessage("A tournament is in progress, please come back later. If you are participating, an OP will place you on a team.");
     }
   }
 }

@@ -64,6 +64,11 @@ public class DuelAcceptCommand implements Command {
 
   @Override
   public void execute(final Player player, CommandParameters params) {
+    if (!player.activeLevel.equals(World.getWorld().getLevel().id)) {
+      player.getActionSender().sendChatMessage("You must be in the game's active level to use this command");
+      return;
+    }
+
     if (player.duelChallengedBy == null) {
       player.getActionSender().sendChatMessage("- &eNo one has challenged you to a duel.");
     } else if (player.hasFlag || player.duelChallengedBy.hasFlag) {

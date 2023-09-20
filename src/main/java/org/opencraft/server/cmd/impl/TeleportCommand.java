@@ -39,6 +39,7 @@ package org.opencraft.server.cmd.impl;
 import org.opencraft.server.cmd.Command;
 import org.opencraft.server.cmd.CommandParameters;
 import org.opencraft.server.model.Player;
+import org.opencraft.server.model.World;
 
 /**
  * Official /tp command
@@ -61,6 +62,11 @@ public class TeleportCommand implements Command {
 
   @Override
   public void execute(Player player, CommandParameters params) {
+    if (!player.activeLevel.equals(World.getWorld().getLevel().id)) {
+      player.getActionSender().sendChatMessage("You must be in the game's active level to use this command");
+      return;
+    }
+
     // Check if player using command is a spectator
     if (player.team == -1) {
       if (params.getArgumentCount() == 1) {

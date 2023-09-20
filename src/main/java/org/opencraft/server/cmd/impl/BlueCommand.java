@@ -40,6 +40,7 @@ import org.opencraft.server.cmd.Command;
 import org.opencraft.server.cmd.CommandParameters;
 import org.opencraft.server.game.impl.GameSettings;
 import org.opencraft.server.model.Player;
+import org.opencraft.server.model.World;
 
 public class BlueCommand implements Command {
 
@@ -55,6 +56,11 @@ public class BlueCommand implements Command {
   }
 
   public void execute(Player player, CommandParameters params) {
+    if (!player.activeLevel.equals(World.getWorld().getLevel().id)) {
+      player.getActionSender().sendChatMessage("You must be in the game's active level to use this command");
+      return;
+    }
+
     if (!GameSettings.getBoolean("Tournament")) {
       player.joinTeam("blue");
     } else {
