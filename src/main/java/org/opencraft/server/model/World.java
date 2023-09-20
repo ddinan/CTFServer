@@ -142,6 +142,15 @@ public final class World {
     return playerList;
   }
 
+  public void addPlayer(Player p) {
+    playerList.add(p);
+  }
+
+  public void removePlayer(Player p) {
+    playerList.remove(p);
+    // TODO: Leave if on a team
+  }
+
   /**
    * Gets the level.
    *
@@ -164,7 +173,7 @@ public final class World {
     level = l;
     BlockLog.clear();
     for (Player player : World.getWorld().getPlayerList().getPlayers()) {
-      LevelGzipper.getLevelGzipper().gzipLevel(player.getSession());
+      LevelGzipper.getLevelGzipper().gzipLevel(player.getSession(), level);
     }
   }
 
@@ -268,7 +277,7 @@ public final class World {
       return;
     }
     session.getActionSender().sendHackControl(true);
-    LevelGzipper.getLevelGzipper().gzipLevel(session);
+    LevelGzipper.getLevelGzipper().gzipLevel(session, level);
   }
 
   /**

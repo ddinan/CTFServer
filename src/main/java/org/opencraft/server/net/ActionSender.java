@@ -130,14 +130,12 @@ public class ActionSender {
   }
 
   /** Sends the level finish packet. */
-  public void sendLevelFinish() {
+  public void sendLevelFinish(Level level) {
     TaskQueue.getTaskQueue()
         .push(
             new Task() {
               public void execute() {
                 try {
-                  // for thread safety
-                  final Level level = World.getWorld().getLevel();
                   PacketBuilder bldr =
                       new PacketBuilder(
                           PersistingPacketManager.getPacketManager().getOutgoingPacket(4));

@@ -44,6 +44,7 @@ import org.opencraft.server.Server;
 import org.opencraft.server.game.GameMode;
 import org.opencraft.server.game.impl.CTFGameMode;
 import org.opencraft.server.game.impl.GameSettings;
+import org.opencraft.server.io.LevelGzipper;
 import org.opencraft.server.net.ActionSender;
 import org.opencraft.server.net.MinecraftSession;
 import org.opencraft.server.net.PingList;
@@ -127,6 +128,7 @@ public class Player extends Entity {
   private final PlayerUI ui;
   public Position safePosition = new Position(0, 0, 0);
   private int currentRoundPoints = Constants.INITIAL_PLAYER_POINTS;
+  private String activeLevel;
 
   // CTF
   public final LinkedList<Mine> mines = new LinkedList<Mine>();
@@ -842,6 +844,21 @@ public class Player extends Entity {
 
   public void setActionSender(ActionSender actionSender) {
     this.actionSender = actionSender;
+  }
+
+  public String getWorld() {
+    return activeLevel;
+  }
+
+  public void moveToLevel(Level level) {
+    assert level != null;
+    activeLevel = level.id;
+
+    for (int id : level.usedSolidTypes) {
+      this.getActionSender().sendBlockPermissions(id, true, true);
+    }
+
+    LevelGzipper.getLevelGzipper().gzipLevel(session, level);
   }
 
   /**

@@ -159,6 +159,7 @@ public abstract class GameMode {
     registerCommand("unban", UnbanCommand.getCommand());
     registerCommand("unbanip", UnbanIPCommand.getCommand());
     registerCommand("vip", VIPCommand.getCommand());
+    registerCommand("visit", VisitCommand.getCommand());
     registerCommand("vote", VoteCommand.getCommand());
     registerCommand("water", WaterCommand.getCommand());
     registerCommand("warn", WarnCommand.getCommand());
