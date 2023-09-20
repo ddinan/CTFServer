@@ -39,6 +39,8 @@ package org.opencraft.server.cmd.impl;
 import java.util.HashMap;
 import org.opencraft.server.cmd.Command;
 import org.opencraft.server.cmd.CommandParameters;
+import org.opencraft.server.model.Level;
+import org.opencraft.server.model.MapController;
 import org.opencraft.server.model.Player;
 import org.opencraft.server.model.World;
 
@@ -64,12 +66,14 @@ public class MapEnvironmentCommand implements Command {
         return;
       }
 
+      Level level = MapController.getLevel(player.activeLevel);
+
       String[] colors = presets.get(name);
-      setColorProperty("fogColor", colors[0]);
-      setColorProperty("skyColor", colors[1]);
-      setColorProperty("cloudColor", colors[2]);
-      setColorProperty("diffuseColor", colors[3]);
-      setColorProperty("ambientColor", colors[4]);
+      setColorProperty("fogColor", colors[0], level);
+      setColorProperty("skyColor", colors[1], level);
+      setColorProperty("cloudColor", colors[2], level);
+      setColorProperty("diffuseColor", colors[3], level);
+      setColorProperty("ambientColor", colors[4], level);
       for (Player p : World.getWorld().getPlayerList().getPlayers()) {
         p.getActionSender().sendMapColors();
       }
@@ -86,8 +90,8 @@ public class MapEnvironmentCommand implements Command {
     player.getActionSender().sendChatMessage("- &eAvailable environments: " + list);
   }
 
-  private void setColorProperty(String name, String colorString) {
-    MapSetCommand.doPropertyChange(name, "#" + colorString);
+  private void setColorProperty(String name, String colorString, Level level) {
+    MapSetCommand.doPropertyChange(name, "#" + colorString, level);
   }
 
   static {

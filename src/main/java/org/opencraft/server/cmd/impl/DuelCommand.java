@@ -40,6 +40,7 @@ import org.opencraft.server.cmd.Command;
 import org.opencraft.server.cmd.CommandParameters;
 import org.opencraft.server.game.impl.GameSettings;
 import org.opencraft.server.model.Player;
+import org.opencraft.server.model.World;
 
 /**
  * Official /deop command **NEEDS PERSISTENCE

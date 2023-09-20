@@ -118,7 +118,7 @@ public class MapSetCommand implements Command {
         }
 
         Server.log(player.getName() + " " + k + " set to " + v);
-        doPropertyChange(k, v.trim());
+        doPropertyChange(k, v.trim(), level);
         for (Player p : World.getWorld().getPlayerList().getPlayers()) {
           p.getActionSender().sendMapAspect();
         }
@@ -133,8 +133,7 @@ public class MapSetCommand implements Command {
     }
   }
 
-  public static void doPropertyChange(String k, String v) {
-    Level level = World.getWorld().getLevel();
+  public static void doPropertyChange(String k, String v, Level level) {
     if (v.equals("null")) {
       level.props.remove(k);
     } else {
