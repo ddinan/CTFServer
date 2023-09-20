@@ -44,6 +44,7 @@ import org.opencraft.server.cmd.Command;
 import org.opencraft.server.cmd.CommandParameters;
 import org.opencraft.server.game.impl.CTFGameMode;
 import org.opencraft.server.model.Level;
+import org.opencraft.server.model.MapController;
 import org.opencraft.server.model.Player;
 import org.opencraft.server.model.World;
 
@@ -84,7 +85,8 @@ public class MapSetCommand implements Command {
   @Override
   public void execute(Player player, CommandParameters params) {
     if (player.isOp()) {
-      Level level = World.getWorld().getLevel();
+      Level level = MapController.getLevel(player.activeLevel);
+
       if (!level.id.contains("/")) {
         player.getActionSender().sendChatMessage("- &eChanging a default map. Be careful!");
       }
@@ -120,11 +122,11 @@ public class MapSetCommand implements Command {
         Server.log(player.getName() + " " + k + " set to " + v);
         doPropertyChange(k, v.trim(), level);
         for (Player p : World.getWorld().getPlayerList().getPlayers()) {
-          p.getActionSender().sendMapAspect();
+          p.getActionSender().sendMapAspect(level);
         }
         if (k.endsWith("Color")) {
           for (Player p : World.getWorld().getPlayerList().getPlayers()) {
-            p.getActionSender().sendMapColors();
+            p.getActionSender().sendMapColors(level);
           }
         }
       }

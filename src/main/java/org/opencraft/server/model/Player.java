@@ -853,8 +853,13 @@ public class Player extends Entity {
   public void moveToLevel(Level level) {
     assert level != null;
 
-    for (int id : level.usedSolidTypes) {
-      this.getActionSender().sendBlockPermissions(id, true, true);
+    // If player is in a team, force them into spectator mode
+    if (this.team == 0 || this.team == 1) this.joinTeam("spec", true);
+
+    Level oldLevel = MapController.getLevel(this.activeLevel);
+
+    for (CustomBlockDefinition blockDef : oldLevel.customBlockDefinitions) {
+      this.getActionSender().sendRemoveBlockDefinition(blockDef.id);
     }
 
     LevelGzipper.getLevelGzipper().gzipLevel(session, level);

@@ -101,9 +101,9 @@ public final class LevelGzipper {
               sendBlocks(level.getCompressedBlocks1(), session.getActionSender(), true);
 
               if (session.isExtensionSupported("EnvMapAspect", 1))
-                session.getActionSender().sendMapAspect();
+                session.getActionSender().sendMapAspect(level);
               if (session.isExtensionSupported("EnvColors"))
-                session.getActionSender().sendMapColors();
+                session.getActionSender().sendMapColors(level);
               session.getActionSender().sendLevelFinish(level);
 
               for (int id : level.usedSolidTypes) {
