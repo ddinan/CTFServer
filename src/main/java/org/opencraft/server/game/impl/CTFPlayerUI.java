@@ -1,6 +1,7 @@
 package org.opencraft.server.game.impl;
 
 import org.opencraft.server.Constants;
+import org.opencraft.server.game.GameMode;
 import org.opencraft.server.model.Level;
 import org.opencraft.server.model.Player;
 import org.opencraft.server.model.PlayerUI;
@@ -28,16 +29,33 @@ public class CTFPlayerUI extends PlayerUI {
       return "";
     }
 
-    String redFlag = ctf.redFlagTaken ? " &6[!]" : "";
-    String blueFlag = ctf.blueFlagTaken ? " &6[!]" : "";
-    return "Map: "
-        + ctf.map.id
-        + " | &cRed: "
-        + ctf.redCaptures
-        + redFlag
-        + " &f| &9Blue: "
-        + ctf.blueCaptures
-        + blueFlag;
+
+
+    if (CTFGameMode.getMode() == Level.CTF) {
+      String redFlag = ctf.redFlagTaken ? " &6[!]" : "";
+      String blueFlag = ctf.blueFlagTaken ? " &6[!]" : "";
+
+      return "Map: "
+              + ctf.map.id
+              + " | &cRed: "
+              + ctf.redCaptures
+              + redFlag
+              + " &f| &9Blue: "
+              + ctf.blueCaptures
+              + blueFlag;
+    }
+
+    else if (CTFGameMode.getMode() == Level.TDM) {
+      return "Map: "
+              + ctf.map.id
+              + " | &cRed: "
+              + ctf.redPoints
+              + "/" + ctf.TDMMaxPoints
+              + " &f| &9Blue: "
+              + ctf.bluePoints + "/" + ctf.TDMMaxPoints;
+    }
+
+    return "";
   }
 
   @Override

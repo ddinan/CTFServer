@@ -79,6 +79,8 @@ public class CTFGameMode extends GameMode {
   public Thread blueFlagDroppedThread;
   public static int redCaptures;
   public static int blueCaptures;
+  public static int redPoints;
+  public static int bluePoints;
   public boolean redFlagTaken = false;
   public boolean blueFlagTaken = false;
 
@@ -162,10 +164,12 @@ public class CTFGameMode extends GameMode {
     if (lethal) {
       float px = x + 0.5f, py = y + 0.5f, pz = z + 0.5f;
       float pr = r + 0.5f;
+
       for (Player t : World.getWorld().getPlayerList().getPlayers()) {
         float tx = (t.getPosition().getX()) / 32f;
         float ty = (t.getPosition().getY()) / 32f;
         float tz = (t.getPosition().getZ()) / 32f;
+
         if (Math.abs(px - tx) < pr
             && Math.abs(py - ty) < pr
             && Math.abs(pz - tz) < pr
@@ -188,12 +192,24 @@ public class CTFGameMode extends GameMode {
           if (!tk) {
             checkFirstBlood(p, t);
           }
+
           if (t.team != -1 && t.team != p.team) {
             p.setAttribute("explodes", (Integer) p.getAttribute("explodes") + 1);
             p.addPoints(5);
           }
+
           if (t.hasFlag) {
             dropFlag(t.team);
+          }
+
+          if (World.getWorld().getLevel().mode == Level.TDM) {
+            if (p.team == 0) redPoints += 1;
+            else if (p.team == 1) bluePoints += 1;
+
+            if (redPoints == TDMMaxPoints || bluePoints == TDMMaxPoints) {
+              nominatedMaps.clear();
+              endGame();
+            }
           }
         }
       }
@@ -332,6 +348,16 @@ public class CTFGameMode extends GameMode {
           p.addPoints(5);
           if (t.hasFlag) {
             dropFlag(t.team);
+          }
+
+          if (World.getWorld().getLevel().mode == Level.TDM) {
+            if (p.team == 0) redPoints += 1;
+            else if (p.team == 1) bluePoints += 1;
+
+            if (redPoints == TDMMaxPoints || bluePoints == TDMMaxPoints) {
+              nominatedMaps.clear();
+              endGame();
+            }
           }
         }
       }
@@ -525,19 +551,32 @@ public class CTFGameMode extends GameMode {
             try {
               String winner = null;
               int winnerID = -2;
-              if (redCaptures > blueCaptures) {
-                winner = "red";
-                winnerID = 0;
-              } else if (blueCaptures > redCaptures) {
-                winner = "blue";
-                winnerID = 1;
+
+              if (getMode() == Level.CTF) {
+                if (redCaptures > blueCaptures) {
+                  winner = "red";
+                  winnerID = 0;
+                } else if (blueCaptures > redCaptures) {
+                  winner = "blue";
+                  winnerID = 1;
+                }
+              } else if (getMode() == Level.TDM) {
+                if (redPoints > bluePoints) {
+                  winner = "red";
+                  winnerID = 0;
+                } else if (bluePoints > redPoints) {
+                  winner = "blue";
+                  winnerID = 1;
+                }
               }
+
               if (winner == null) {
                 World.getWorld().broadcast("- &6The game ended in a tie!");
               } else {
                 World.getWorld()
                     .broadcast("- &6The game has ended; the " + winner + " team wins!");
               }
+
               if (getMode() == Level.CTF) {
                 World.getWorld()
                     .broadcast(
@@ -546,15 +585,16 @@ public class CTFGameMode extends GameMode {
                             + " captures, blue had "
                             + blueCaptures
                             + ".");
-              } else {
+              } else if (getMode() == Level.TDM) {
                 World.getWorld()
                     .broadcast(
                         "- &6Red had "
-                            + redCaptures
+                            + redPoints
                             + " kills, blue had "
-                            + blueCaptures
+                            + bluePoints
                             + ".");
               }
+
               for (Player p : World.getWorld().getPlayerList().getPlayers()) {
                 if (p.team != -1) {
                   p.setAttribute("games", (Integer) p.getAttribute("games") + 1);
@@ -936,6 +976,16 @@ public class CTFGameMode extends GameMode {
             p.died(m.owner);
             updateKillFeed(m.owner, p, m.owner.parseName() + " mined " + p.parseName() + ".");
             m.owner.addPoints(GameSettings.getInt("MinePoints"));
+
+            if (World.getWorld().getLevel().mode == Level.TDM) {
+              if (m.owner.team == 0) redPoints += 1;
+              else if (m.owner.team == 1) bluePoints += 1;
+
+              if (redPoints == TDMMaxPoints || bluePoints == TDMMaxPoints) {
+                nominatedMaps.clear();
+                endGame();
+              }
+            }
           }
         }
       }

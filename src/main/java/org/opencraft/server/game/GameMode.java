@@ -87,6 +87,8 @@ public abstract class GameMode {
   public Level map;
   private ArrayList<DropItem> items = new ArrayList<>(8);
 
+  public static int TDMMaxPoints = 200;
+
   public GameMode() {
     registerCommand("accept", DuelAcceptCommand.getCommand());
     registerCommand("addspawn", AddSpawnCommand.getCommand());
@@ -336,6 +338,7 @@ public abstract class GameMode {
             try {
               gameStartTime = System.currentTimeMillis();
               tournamentGameStarted = !GameSettings.getBoolean("Tournament");
+
               for (Player player : World.getWorld().getPlayerList().getPlayers()) {
                 player.team = -1;
                 player.hasVoted = false;
@@ -382,6 +385,9 @@ public abstract class GameMode {
                 Thread.sleep(5 * 1000);
               } catch (InterruptedException ex) {
               }
+
+              TDMMaxPoints = World.getWorld().getPlayerList().getPlayers().size() * 20; // 1 player : 20 kills ratio
+
               World.getWorld()
                   .broadcast("- &6Say /join to start playing, or /spec to spectate.");
               ready = true;
