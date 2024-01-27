@@ -91,6 +91,9 @@ public class CTFPlayerUI extends PlayerUI {
     if (ctf.getMode() == Level.TDM) {
       timerSetting = "TDMTimeLimit";
       timerMessage = "Team Deathmatch";
+    } else if (ctf.getMode() == Level.CP) {
+      timerSetting = "CPTimeLimit";
+      timerMessage = "Control Point";
     } else {
       timerSetting = "TimeLimit";
       timerMessage = "Capture the Flag";

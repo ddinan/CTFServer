@@ -1358,7 +1358,10 @@ public class CTFGameMode extends GameMode {
   @Override
   public void step() {
     super.step();
-    String setting = getMode() == Level.TDM ? "TDMTimeLimit" : "TimeLimit";
+    String setting = "TimeLimit";
+    if (getMode() == Level.TDM) setting = "TDMTimeLimit";
+    if (getMode() == Level.CP) setting = "CPTimeLimit";
+
     int timeLimit = GameSettings.getInt(setting);
     if (timeLimit > 0) {
       long elapsedTime = System.currentTimeMillis() - gameStartTime;

@@ -295,6 +295,8 @@ public class WebServer {
           String timerSetting = null;
           if (CTFGameMode.getMode() == Level.TDM) {
             timerSetting = "TDMTimeLimit";
+          } else if (CTFGameMode.getMode() == Level.CP) {
+            timerSetting = "CPTimeLimit";
           } else {
             timerSetting = "TimeLimit";
           }

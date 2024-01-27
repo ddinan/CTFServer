@@ -17,6 +17,7 @@ public class GameSettings {
     add("MaxMines", TYPE_INT, 2);
     add("LTTimeLimit", TYPE_INT, 10);
     add("TDMTimeLimit", TYPE_INT, 10);
+    add("CPTimeLimit", TYPE_INT, 15);
     add("TimeLimit", TYPE_INT, 20);
     add("EnableStore", TYPE_BOOLEAN, true);
     add("OnlyTDM", TYPE_BOOLEAN, false);

@@ -78,6 +78,7 @@ public final class Level implements Cloneable {
 
   public static final int CTF = 0;
   public static final int TDM = 1;
+  public static final int CP = 2;
 
   /** The level width. */
   public int width;
@@ -330,6 +331,8 @@ public final class Level implements Cloneable {
                   Integer.parseInt(parts[1]) * 32 + 16));
         }
       }
+    } else if (props.getProperty("isCP") != null) {
+      mode = CP;
     } else {
       mode = CTF;
       divider = Integer.parseInt(props.getProperty("divider"));
