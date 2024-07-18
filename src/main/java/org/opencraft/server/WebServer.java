@@ -391,11 +391,15 @@ public class WebServer {
               int captures = target.captures;
               int points = target.getPoints();
 
+              int x = target.getPosition().getX() / 32;
+              int y = target.getPosition().getY() / 32;
+
               respTextBuilder.append("  \"username\": ").append("\"" + username + "\"").append(",\n");
               respTextBuilder.append("  \"kills\": ").append(kills).append(",\n");
               respTextBuilder.append("  \"deaths\": ").append(deaths).append(",\n");
               respTextBuilder.append("  \"captures\": ").append(captures).append(",\n");
-              respTextBuilder.append("  \"points\": ").append(points).append("\n");
+              respTextBuilder.append("  \"points\": ").append(points).append(",\n");
+              respTextBuilder.append("  \"location\": ").append("[" + x + ", " + y + "]").append("\n");
               respTextBuilder.append("}");
             }
           } else {
