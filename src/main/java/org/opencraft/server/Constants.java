@@ -91,11 +91,12 @@ public final class Constants {
     "SetHotbar",
     "LongerMessages",
     "BulkBlockUpdate",
+    "ExtEntityTeleport"
   };
 
   // CPE versions
   public static final int[] CPE_EXT_VERSIONS =
-      {1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+      {1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
   public static final int NUM_CPE_EXTENSIONS = CPE_EXT_NAMES.length;
   public static final int COLOR_SKY = 0;
   public static final int COLOR_CLOUD = 1;
@@ -185,4 +186,8 @@ public final class Constants {
 
   public static final int FLAME_THROWER_FUEL = 10000;
   public static final int INITIAL_PLAYER_POINTS = 40;
+
+  public static final int SPEC_TEAM = -1;
+  public static final int RED_TEAM = 0;
+  public static final int BLUE_TEAM = 1;
 }

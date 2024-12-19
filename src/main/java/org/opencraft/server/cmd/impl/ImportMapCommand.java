@@ -36,34 +36,39 @@
  */
 package org.opencraft.server.cmd.impl;
 
+import org.opencraft.server.Server;
 import org.opencraft.server.cmd.Command;
 import org.opencraft.server.cmd.CommandParameters;
 import org.opencraft.server.model.Player;
 
-import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
-import org.opencraft.server.Server;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
-public class MapImportCommand implements Command {
+public class ImportMapCommand implements Command {
 
-  private static final MapImportCommand INSTANCE = new MapImportCommand();
+  private static final ImportMapCommand INSTANCE = new ImportMapCommand();
 
   /**
    * Gets the singleton instance of this command.
    *
    * @return The singleton instance of this command.
    */
-  public static MapImportCommand getCommand() {
+  public static ImportMapCommand getCommand() {
     return INSTANCE;
   }
 
   @Override
   public void execute(final Player player, final CommandParameters params) {
-    if (player.isOp()) {
-      if (params.getArgumentCount() > 0) {
+    // Only trust these users to import maps
+    if (player.getName().equalsIgnoreCase("Jacob_") ||
+            player.getName().equalsIgnoreCase("jack") ||
+            player.getName().equalsIgnoreCase("Venk"))
+    {
+      if (params.getArgumentCount() > 1) {
         player.getActionSender().sendChatMessage("Downloading map...");
         new Thread(
                 new Runnable() {
@@ -71,24 +76,23 @@ public class MapImportCommand implements Command {
                   public void run() {
                     try {
                       String mapName = params.getStringArgument(0);
-                      String urlString =
-                              "https://persignum.com/download.php?password=IJobS0d3Mb&mapname="
-                                      + URLEncoder.encode(mapName, "UTF-8");
-                      URL url = new URL(urlString);
-                      ReadableByteChannel ch = Channels.newChannel(url.openStream());
-                      if (mapName.contains("/"))
-                        mapName = mapName.substring(mapName.indexOf("/") + 1);
-                      String path = "maps/more/" + mapName + ".lvl";
-                      FileOutputStream out = new FileOutputStream(path);
-                      out.getChannel().transferFrom(ch, 0, Long.MAX_VALUE);
-                      player.getActionSender().sendChatMessage("Saved to " + path);
-                      player
-                              .getActionSender()
-                              .sendChatMessage("Use /newgame more/" + mapName + " to switch" + " to it");
+                      String urlString = params.getStringArgument(1);
+
+                      // Special use case for Dropbox. dl=0 does not actually download the .cw file
+                      if (urlString.contains("dropbox"))
+                        urlString = urlString.replace("dl=0", "dl=1");
+
+                      String path = "./maps/" + mapName + ".cw"; // Use '/importmap more/<map> <url>' to import 'more/' maps
+
+                      try (InputStream in = new URL(urlString).openStream()) {
+                        Files.copy(in, Paths.get(path), StandardCopyOption.REPLACE_EXISTING);
+                      }
+
+                      player.getActionSender().sendChatMessage("&aSaved to " + path);
+                      player.getActionSender().sendChatMessage("Use /newgame " + mapName + " to switch" + " to it");
+                      player.getActionSender().sendChatMessage("Use /importprops to import the .properties!");
                     } catch (Exception ex) {
-                      player
-                              .getActionSender()
-                              .sendChatMessage("Error downloading map. Blame Jacob_ or Jack");
+                      player.getActionSender().sendChatMessage("Error downloading map:");
                       player.getActionSender().sendChatMessage(ex.toString());
                       Server.log(ex);
                     }
@@ -97,10 +101,10 @@ public class MapImportCommand implements Command {
                 .start();
       } else {
         player.getActionSender().sendChatMessage("Wrong number of arguments");
-        player.getActionSender().sendChatMessage("/mapimport <map>");
+        player.getActionSender().sendChatMessage("/importmap <map> <url>");
       }
     } else {
-      player.getActionSender().sendChatMessage("You must be OP to do that!");
+      player.getActionSender().sendChatMessage("Only Jacob_, jack, or Venk may import maps.");
     }
   }
 }

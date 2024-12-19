@@ -62,6 +62,7 @@ import java.util.Map;
 import java.util.NavigableSet;
 import java.util.TreeSet;
 import tf.jacobsc.ctf.server.commands.QualityCommand;
+import tf.jacobsc.ctf.server.commands.TeamsCommand;
 import tf.jacobsc.utils.DuelKt;
 import tf.jacobsc.utils.RatingKt;
 import tf.jacobsc.utils.RatingType;
@@ -117,13 +118,14 @@ public abstract class GameMode {
     registerCommand("hidden", HiddenCommand.getCommand());
     registerCommand("hide", HideCommand.getCommand());
     registerCommand("ignore", IgnoreCommand.getCommand());
+    registerCommand("importmap", ImportMapCommand.getCommand());
+    registerCommand("importprops", ImportPropsCommand.getCommand());
     registerCommand("join", JoinCommand.getCommand());
     registerCommand("k", KickCommand.getCommand());
     registerCommand("kick", KickCommand.getCommand());
     registerCommand("lava", LavaCommand.getCommand());
     registerCommand("log", LogCommand.getCommand());
     registerCommand("mapenvironment", MapEnvironmentCommand.getCommand());
-    registerCommand("mapimport", MapImportCommand.getCommand());
     registerCommand("maps", MapListCommand.getCommand());
     registerCommand("mapset", MapSetCommand.getCommand());
     registerCommand("me", MeCommand.getCommand());
@@ -140,6 +142,7 @@ public abstract class GameMode {
     registerCommand("players", ClientsCommand.getCommand());
     registerCommand("pm", PmCommand.getCommand());
     registerCommand("points", PointsCommand.getCommand());
+    registerCommand("pov", POVCommand.getCommand());
     registerCommand("pstats", PInfoCommand.getCommand());
     registerCommand("ragequit", RagequitCommand.getCommand());
     registerCommand("removespawn", RemoveSpawnCommand.getCommand());
@@ -158,6 +161,7 @@ public abstract class GameMode {
     registerCommand("spec", SpecCommand.getCommand());
     registerCommand("start", StartCommand.getCommand());
     registerCommand("quality", QualityCommand.INSTANCE);
+    registerCommand("teams", TeamsCommand.INSTANCE);
     registerCommand("stats", StatsCommand.getCommand());
     registerCommand("status", StatusCommand.getCommand());
     registerCommand("store", StoreCommand.getCommand());
@@ -357,6 +361,7 @@ public abstract class GameMode {
                 player.team = -1;
                 player.hasVoted = false;
                 player.hasNominated = false;
+		player.isCreepering = false;
                 player.currentRoundPointsEarned = 0;
                 player.setPoints(GameSettings.getInt("InitialPoints"));
                 player.kills = 0;

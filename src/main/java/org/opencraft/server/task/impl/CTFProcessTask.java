@@ -43,7 +43,7 @@ import org.opencraft.server.task.ScheduledTask;
 
 public class CTFProcessTask extends ScheduledTask {
 
-  private static final long DELAY = 100;
+  private static final long DELAY = 50;
   private static GameMode gameMode = World.getWorld().getGameMode();
   private static World world = World.getWorld();
   private static int ticks = 0;
@@ -55,6 +55,12 @@ public class CTFProcessTask extends ScheduledTask {
   public void execute() {
     for (Player player : world.getPlayerList().getPlayers()) {
       player.step(ticks);
+
+      if (player.following != null) {
+        player.getActionSender().sendTeleport(player.following.getPosition(), player.following.getRotation());
+        player.setPosition(player.following.getPosition());
+        player.setRotation(player.following.getRotation());
+      }
     }
     gameMode.step();
 

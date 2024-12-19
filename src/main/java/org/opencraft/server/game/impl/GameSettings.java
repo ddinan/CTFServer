@@ -22,7 +22,7 @@ public class GameSettings {
     add("OnlyTDM", TYPE_BOOLEAN, false);
     add("Debug", TYPE_BOOLEAN, false);
     add("Tournament", TYPE_BOOLEAN, false);
-    add("FlagDrops", TYPE_BOOLEAN, false);
+    add("FlagDrops", TYPE_BOOLEAN, true);
     add("FlameThrowerStartDistanceFromPlayer", TYPE_INT, 3);
     add("FlameThrowerLength", TYPE_INT, 2);
     add("FlameThrowerRechargeTime", TYPE_INT, 30);
@@ -30,7 +30,9 @@ public class GameSettings {
     add("Ammo", TYPE_INT, 20); // number of shots before reloading
     add("Health", TYPE_INT, 24); // number of hits taken before having to resupply
     add("ReloadStep", TYPE_INT, 3);
-    add("AntiStalemate", TYPE_BOOLEAN, false);
+    add("AntiStalemate", TYPE_BOOLEAN, true);
+    add("AntiStalemateTime", TYPE_INT, 90);
+    add("StalemateTags", TYPE_BOOLEAN, false);
     add("InitialPoints", TYPE_INT, Constants.INITIAL_PLAYER_POINTS);
     add("Whitelist", TYPE_BOOLEAN, false);
     add("WhitelistMessage", TYPE_STRING, "There is a tournament going on, try again later!");
@@ -40,7 +42,10 @@ public class GameSettings {
     add("BigTNTPrice", TYPE_INT, 70);
     add("BigTNTAmount", TYPE_INT, 7);
     add("BigTNTRadius", TYPE_INT, 3);
-    add("CreeperPrice", TYPE_INT, 40);
+    add("CreeperPrice", TYPE_INT, 30);
+    add("CreeperRadius", TYPE_INT, 4);
+    add("CreeperTime", TYPE_FLOAT, 2.0f);
+    add("CreeperShield", TYPE_BOOLEAN, false);
     add("GrenadePrice", TYPE_INT, 35);
     add("LinePrice", TYPE_INT, 25);
     add("RocketPrice", TYPE_INT, 60);

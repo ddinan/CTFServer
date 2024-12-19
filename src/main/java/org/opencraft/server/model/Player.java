@@ -140,6 +140,8 @@ public class Player extends Entity implements IPlayer {
   public Position safePosition = new Position(0, 0, 0);
   private int currentRoundPoints = Constants.INITIAL_PLAYER_POINTS;
   public boolean streamerMode = false;
+  public Player following = null;
+  public int followingIndex = -1;
 
   // CTF
   public final LinkedList<Mine> mines = new LinkedList<Mine>();
@@ -156,6 +158,7 @@ public class Player extends Entity implements IPlayer {
   public boolean hasNominated = false;
   // STORE STUFF
   public int bigTNTRemaining = 0;
+  public boolean isCreepering = false;
 
   // Laser Tag
   private int ammo;
@@ -480,6 +483,7 @@ public class Player extends Entity implements IPlayer {
 
   public void died(Player attacker) {
     deaths++;
+    this.isCreepering = false;
     if (killstreak >= 10) {
       World.getWorld()
           .broadcast(
@@ -618,6 +622,7 @@ public class Player extends Entity implements IPlayer {
           .sendChatMessage(
               "- &aThis map was contributed by: " + World.getWorld().getLevel().getCreator());
     }
+    this.isCreepering = false;
     if (isHidden && !team.equals("spec")) {
       Server.log(getName() + " is now unhidden");
       makeVisible();
@@ -1083,6 +1088,12 @@ public class Player extends Entity implements IPlayer {
   }
 
   public boolean isSafe() {
-    return System.currentTimeMillis() - safeTime < Constants.SAFE_TIME;
+    long curTime = System.currentTimeMillis();
+
+    return curTime - safeTime < Constants.SAFE_TIME
+      || (
+        GameSettings.getBoolean("CreeperShield")
+          && (curTime - creeperTime < (long)(1000 * GameSettings.getFloat("CreeperTime")))
+      );
   }
 }
