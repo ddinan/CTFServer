@@ -77,11 +77,9 @@ public class AchievementManager {
         String username = entry.getKey();
         Set<String> earnedAchievements = entry.getValue();
 
-        // Create a player element (using username as the ID)
         Element playerElement = doc.createElement("player");
         playerElement.setAttribute("username", username);
 
-        // Create an element for each achievement the player has earned
         for (String achievementId : earnedAchievements) {
           Element achievementElement = doc.createElement("achievement");
           achievementElement.appendChild(doc.createTextNode(achievementId));
