@@ -38,6 +38,7 @@ package org.opencraft.server;
 
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import org.opencraft.server.game.impl.GameSettings;
+import org.opencraft.server.model.AchievementManager;
 import org.opencraft.server.model.MapController;
 import org.opencraft.server.model.Player;
 import org.opencraft.server.model.Store;
@@ -88,6 +89,7 @@ public final class Server {
   private static ArrayList<String> mutes = new ArrayList<String>(128);
   private static ArrayList<String> whitelist = new ArrayList<String>(128);
   private static Server instance;
+  public static AchievementManager achievementManager;
 
   private static LinkedList<ConsoleMessage> messages = new LinkedList<ConsoleMessage>();
   /** The socket acceptor. */
@@ -129,6 +131,10 @@ public final class Server {
     while ((l = r.readLine()) != null) {
       whitelist.add(l);
     }
+
+    achievementManager = new AchievementManager();
+    achievementManager.loadAchievements("achievements.xml");
+    achievementManager.loadPlayerAchievements("playerAchievements.xml");
 
     MapController.create();
     log("Creating world...");

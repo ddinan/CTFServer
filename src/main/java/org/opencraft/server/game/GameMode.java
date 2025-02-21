@@ -97,6 +97,7 @@ public abstract class GameMode {
 
   public GameMode() {
     registerCommand("accept", DuelAcceptCommand.getCommand());
+    registerCommand("achievements", AchievementsCommand.getCommand());
     registerCommand("addspawn", AddSpawnCommand.getCommand());
     registerCommand("b", BlockInfoCommand.getCommand());
     registerCommand("ban", XBanCommand.getCommand());

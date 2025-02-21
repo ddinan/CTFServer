@@ -1,0 +1,14 @@
+<achievements>
+    <achievement id="first_kill">
+        <description>Kill your first enemy</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="place_block">
+        <description>Place a block</description>
+        <targetProgress>0</targetProgress>
+    </achievement>
+    <achievement id="place_blocks">
+        <description>Place 3 blocks</description>
+        <targetProgress>3</targetProgress>
+    </achievement>
+</achievements>
