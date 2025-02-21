@@ -1,14 +1,98 @@
 <achievements>
-    <achievement id="first_kill">
-        <description>Kill your first enemy</description>
+    <achievement id="winner">
+        <description>Win your first game</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="place_block">
-        <description>Place a block</description>
-        <targetProgress>0</targetProgress>
+    <achievement id="champion">
+        <description>Win 100 gamesTF</description>
+        <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="place_blocks">
-        <description>Place 3 blocks</description>
-        <targetProgress>3</targetProgress>
+    <achievement id="pacifist">
+        <description>Win a game without killing a single player</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="untouchable">
+        <description>Win a game without dying</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="invincible">
+        <description>Win a game without dying and 10+ kills</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="unfathomable">
+        <description>Win a game with 10+ kills, 5 captures, and without dying</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="enjoy_your_stay">
+        <description>Play your first game</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="invested">
+        <description>Play 100 games</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="nolife">
+        <description>Play 500 games</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="kaboom">
+        <description>Explode your first enemy</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="demoman">
+        <description>Explode 1000 enemies</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="nobels_finest">
+        <description>Explode 5000 enemies</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="team_carrier">
+        <description>Get 5 captures in a single game</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="double_trouble">
+        <description>Explode 2 enemies with the same TNT</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="triple_trouble">
+        <description>Explode 3 enemies with the same TNT</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="kamikaze">
+        <description>Explode a player by using creeper</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="finishing_touch">
+        <description>Capture the 5th flag to win the game</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="overtime">
+        <description>Capture the flag to win the game in overtime</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="fried">
+        <description>Kill a player with the flamethrower</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="medium_fried">
+        <description>Kill 250 players with the flamethrower</description>
+        <targetProgress>250</targetProgress>
+    </achievement>
+    <achievement id="deep_fried">
+        <description>Kill 500 players with the flamethrower</description>
+        <targetProgress>500</targetProgress>
+    </achievement>
+    <achievement id="duelist">
+        <description>Win your first duel</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="gladiator">
+        <description>Win 50 duels</description>
+        <targetProgress>50</targetProgress>
+    </achievement>
+    <achievement id="bounty_hunter">
+        <description>Kill a player with a bounty on their head</description>
+        <targetProgress>1</targetProgress>
     </achievement>
 </achievements>

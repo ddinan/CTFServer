@@ -472,6 +472,15 @@ public class Player extends Entity implements IPlayer {
         duelPlayer.duelPlayer = null;
         duelPlayer = null;
 
+        // Achievements
+        if (!Server.achievementManager.hasPlayerEarnedAchievement(getName(), "duelist")) {
+          Server.achievementManager.incrementProgress(getName(), "duelist", 1);
+        }
+
+        if (!Server.achievementManager.hasPlayerEarnedAchievement(getName(), "gladiator")) {
+          Server.achievementManager.incrementProgress(getName(), "gladiator", 1);
+        }
+
         sendToTeamSpawn();
       }
     }
@@ -561,6 +570,10 @@ public class Player extends Entity implements IPlayer {
                 this.bountyMode = false;
                 this.bountyAmount = 0;
                 attacker.lastAmount = attacker.bountyKills;
+
+                if (!Server.achievementManager.hasPlayerEarnedAchievement(getName(), "bounty_hunter")) {
+                  Server.achievementManager.incrementProgress(getName(), "bounty_hunter", 1);
+                }
               }
             }
           }

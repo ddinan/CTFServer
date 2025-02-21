@@ -186,12 +186,31 @@ public class CTFGameMode extends GameMode {
                   + " exploded "
                   + t.getColoredName()
                   + (type == null ? "" : " &f(" + type + ")"));
+
+
           if (!tk) {
             checkFirstBlood(p, t);
           }
           if (t.team != -1 && t.team != p.team) {
             p.incIntAttribute("explodes");
             p.addPoints(5);
+
+            // Achievements
+            if (!Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "kaboom")) {
+              Server.achievementManager.updateProgress(p.getName(), "kaboom", 1);
+            }
+
+            if (p.getIntAttribute("explodes") >= 1000 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "demoman")) {
+              Server.achievementManager.updateProgress(p.getName(), "demoman", 1);
+            }
+
+            if (p.getIntAttribute("explodes") >= 5000 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "nobels_finest")) {
+              Server.achievementManager.updateProgress(p.getName(), "nobels_finest", 1);
+            }
+
+            if (type == "Creeper" && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "kamikaze")) {
+              Server.achievementManager.updateProgress(p.getName(), "kamikaze", 1);
+            }
           }
           if (t.hasFlag) {
             dropFlag(t.team);
@@ -215,8 +234,14 @@ public class CTFGameMode extends GameMode {
 
     if (killed.size() == 2) {
       World.getWorld().broadcast("- " + p.parseName() + " &egot a &bDouble Kill");
+      if (!Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "double_trouble")) {
+        Server.achievementManager.updateProgress(p.getName(), "double_trouble", 1);
+      }
     } else if (killed.size() == 3) {
       World.getWorld().broadcast("- " + p.parseName() + " &egot a &bTriple Kill");
+      if (!Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "triple_trouble")) {
+        Server.achievementManager.updateProgress(p.getName(), "triple_trouble", 1);
+      }
     } else if (killed.size() > 3) {
       World.getWorld().broadcast("- " + p.parseName() + " &egot a &b" + killed.size() + "x Kill");
       for (Player t : killed) {
@@ -337,6 +362,20 @@ public class CTFGameMode extends GameMode {
           updateKillFeed(p, t, p.parseName() + " cooked " + t.getColoredName());
           checkFirstBlood(p, t);
           p.addPoints(5);
+
+          // Achievements
+          if (!Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "fried")) {
+            Server.achievementManager.incrementProgress(p.getName(), "fried", 1);
+          }
+
+          if (!Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "medium_fried")) {
+            Server.achievementManager.incrementProgress(p.getName(), "medium_fried", 1);
+          }
+
+          if (!Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "deep_fried")) {
+            Server.achievementManager.incrementProgress(p.getName(), "deep_fried", 1);
+          }
+
           if (t.hasFlag) {
             dropFlag(t.team);
           }
@@ -601,10 +640,57 @@ public class CTFGameMode extends GameMode {
               for (Player p : World.getWorld().getPlayerList().getPlayers()) {
                 if (p.team != -1) {
                   p.incIntAttribute("games");
+
+                  // Achievements
+                  if (!Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "enjoy_your_stay")) {
+                    Server.achievementManager.updateProgress(p.getName(), "enjoy_your_stay", 1);
+                  }
+
+                  if (p.getIntAttribute("games") >= 100 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "invested")) {
+                    Server.achievementManager.updateProgress(p.getName(), "invested", 1);
+                  }
+
+                  if (p.getIntAttribute("games") >= 500 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "nolife")) {
+                    Server.achievementManager.updateProgress(p.getName(), "nolife", 1);
+                  }
                 }
                 if (p.team == winnerID) {
                   p.incIntAttribute("wins");
+
+                  // Achievements
+                  if (!Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "winner")) {
+                    Server.achievementManager.updateProgress(p.getName(), "winner", 1);
+                  }
+
+                  if (p.kills == 0 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "pacifist")) {
+                    Server.achievementManager.updateProgress(p.getName(), "pacifist", 1);
+                  }
+
+                  if (p.deaths == 0 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "invincible")) {
+                    Server.achievementManager.updateProgress(p.getName(), "invincible", 1);
+                  }
+
+                  if (p.deaths == 0 && p.kills >= 10 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "untouchable")) {
+                    Server.achievementManager.updateProgress(p.getName(), "untouchable", 1);
+                  }
+
+                  if (p.getIntAttribute("wins") >= 100 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "champion")) {
+                    Server.achievementManager.updateProgress(p.getName(), "champion", 1);
+                  }
+
+                  if (p.getIntAttribute("wins") >= 100 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "champion")) {
+                    Server.achievementManager.updateProgress(p.getName(), "champion", 1);
+                  }
+
+                  if (p.deaths == 0 && p.kills >= 10 && p.captures >= 5 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "unfathomable")) {
+                    Server.achievementManager.updateProgress(p.getName(), "unfathomable", 1);
+                  }
+
+                  if (p.captures >= 5 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "team_carrier")) {
+                    Server.achievementManager.updateProgress(p.getName(), "team_carrier", 1);
+                  }
                 }
+
                 p.hasVoted = false;
                 p.hasNominated = false;
               }
@@ -1019,6 +1105,14 @@ public class CTFGameMode extends GameMode {
           if (redCaptures == GameSettings.getInt("MaxCaptures") || suddenDeath) {
             nominatedMaps.clear();
             endGame();
+
+            if (redCaptures == GameSettings.getInt("MaxCaptures") && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "finishing_touch")) {
+              Server.achievementManager.updateProgress(p.getName(), "finishing_touch", 1);
+            }
+
+            if (suddenDeath && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "overtime")) {
+              Server.achievementManager.updateProgress(p.getName(), "overtime", 1);
+            }
           } else {
             showScore();
           }
@@ -1073,6 +1167,14 @@ public class CTFGameMode extends GameMode {
           if (blueCaptures == GameSettings.getInt("MaxCaptures") || suddenDeath) {
             nominatedMaps.clear();
             endGame();
+
+            if (blueCaptures == GameSettings.getInt("MaxCaptures") && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "finishing_touch")) {
+              Server.achievementManager.updateProgress(p.getName(), "finishing_touch", 1);
+            }
+
+            if (suddenDeath && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "overtime")) {
+              Server.achievementManager.updateProgress(p.getName(), "overtime", 1);
+            }
           } else {
             showScore();
           }
