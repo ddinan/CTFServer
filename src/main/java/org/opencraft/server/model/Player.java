@@ -809,6 +809,10 @@ public class Player extends Entity implements IPlayer {
   public void addPoints(int n) {
     currentRoundPointsEarned += n;
     currentRoundPoints += n;
+    
+    if (currentRoundPointsEarned >= 300 && !Server.achievementManager.hasPlayerEarnedAchievement(getName(), "Moneybags")) {
+      Server.achievementManager.updateProgress(getName(), "Moneybags", 1);
+    }
   }
 
   public int getPoints() {

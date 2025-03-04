@@ -4,7 +4,7 @@
         <targetProgress>1</targetProgress>
     </achievement>
     <achievement id="champion">
-        <description>Win 100 gamesTF</description>
+        <description>Win 100 games</description>
         <targetProgress>1</targetProgress>
     </achievement>
     <achievement id="pacifist">
@@ -93,6 +93,30 @@
     </achievement>
     <achievement id="bounty_hunter">
         <description>Kill a player with a bounty on their head</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="against_all_odds">
+        <description>Win a game despite having less players on your team than the enemy team</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="touch_grass">
+        <description>Touch grass for the first time</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="Gotcha!">
+        <description>Tag 100 players</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="Tag...">
+        <description>Tag 100 players</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="...you're it">
+        <description>Tag 500 players</description>
+        <targetProgress>1</targetProgress>
+    </achievement>
+    <achievement id="Moneybags">
+        <description>Earn a total of 300 points in a single game</description>
         <targetProgress>1</targetProgress>
     </achievement>
 </achievements>

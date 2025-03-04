@@ -214,6 +214,10 @@ public class CTFGameMode extends GameMode {
           }
           if (t.hasFlag) {
             dropFlag(t.team);
+
+            if (redFlagTaken && blueFlagTaken && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "progressor")) {
+              Server.achievementManager.updateProgress(p.getName(), "progressor", 1);
+            }
           }
         }
       }
@@ -688,6 +692,28 @@ public class CTFGameMode extends GameMode {
 
                   if (p.captures >= 5 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "team_carrier")) {
                     Server.achievementManager.updateProgress(p.getName(), "team_carrier", 1);
+                  }
+
+                  int redPlayers = 0;
+                  int bluePlayers = 0;
+
+                  for (Player pl : World.getWorld().getPlayerList().getPlayers()) {
+                    if (pl.team == 0) redPlayers++;
+                    else if (pl.team == 1) bluePlayers++;
+                  }
+
+                  int teamCount = 0;
+                  int enemyTeamCount = 0;
+                  if (p.team == 0) {
+                    teamCount = redPlayers;
+                    enemyTeamCount = bluePlayers;
+                  } else if (p.team == 1) {
+                    teamCount = bluePlayers;
+                    enemyTeamCount = redPlayers;
+                  }
+
+                  if (enemyTeamCount > enemyTeamCount && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "against_all_odds")) {
+                    Server.achievementManager.updateProgress(p.getName(), "against_all_odds", 1);
                   }
                 }
 
@@ -1308,6 +1334,19 @@ public class CTFGameMode extends GameMode {
         tagger.incIntAttribute("tags");
         tagger.addPoints(15);
         updateKillFeed(tagger, tagged, tagger.parseName() + " tagged " + tagged.parseName() + ".");
+
+        // Achievements
+        if (!Server.achievementManager.hasPlayerEarnedAchievement(tagger.getName(), "Gotcha!")) {
+          Server.achievementManager.updateProgress(tagger.getName(), "Gotcha!", 1);
+        }
+
+        if (tagger.getIntAttribute("tags") >= 100 && !Server.achievementManager.hasPlayerEarnedAchievement(tagger.getName(), "Tag...")) {
+          Server.achievementManager.updateProgress(tagger.getName(), "Tag...", 1);
+        }
+
+        if (tagger.getIntAttribute("tags") >= 500 && !Server.achievementManager.hasPlayerEarnedAchievement(tagger.getName(), "...you're it")) {
+          Server.achievementManager.updateProgress(tagger.getName(), "...you're it", 1);
+        }
       }
     }
   }
