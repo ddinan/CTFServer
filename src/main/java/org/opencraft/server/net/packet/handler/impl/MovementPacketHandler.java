@@ -81,10 +81,10 @@ public class MovementPacketHandler implements PacketHandler<MinecraftSession> {
       return;
     }
 
-    if (!Server.achievementManager.hasPlayerEarnedAchievement(player.getName(), "touch_grass")) {
+    if (!Server.achievementManager.hasPlayerEarnedAchievement(player.getName(), "Touch Grass")) {
       int blockBelow = World.getWorld().getLevel().getBlock(blockPosition.getX(), blockPosition.getY(), blockPosition.getZ() - 2);
       if (blockBelow == BlockConstants.GRASS) {
-        Server.achievementManager.updateProgress(player.getName(), "touch_grass", 1);
+        Server.achievementManager.updateProgress(player.getName(), "Touch Grass", 1);
       }
     }
 

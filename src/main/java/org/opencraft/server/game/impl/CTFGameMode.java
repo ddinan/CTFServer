@@ -196,27 +196,27 @@ public class CTFGameMode extends GameMode {
             p.addPoints(5);
 
             // Achievements
-            if (!Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "kaboom")) {
-              Server.achievementManager.updateProgress(p.getName(), "kaboom", 1);
+            if (!Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "Kaboom!")) {
+              Server.achievementManager.updateProgress(p.getName(), "Kaboom!", 1);
             }
 
-            if (p.getIntAttribute("explodes") >= 1000 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "demoman")) {
-              Server.achievementManager.updateProgress(p.getName(), "demoman", 1);
+            if (p.getIntAttribute("explodes") >= 1000 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "Demoman")) {
+              Server.achievementManager.updateProgress(p.getName(), "Demoman", 1);
             }
 
-            if (p.getIntAttribute("explodes") >= 5000 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "nobels_finest")) {
-              Server.achievementManager.updateProgress(p.getName(), "nobels_finest", 1);
+            if (p.getIntAttribute("explodes") >= 5000 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "Nobel's Finest")) {
+              Server.achievementManager.updateProgress(p.getName(), "Nobel's Finest", 1);
             }
 
-            if (type == "Creeper" && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "kamikaze")) {
-              Server.achievementManager.updateProgress(p.getName(), "kamikaze", 1);
+            if (type == "Creeper" && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "Kamikaze")) {
+              Server.achievementManager.updateProgress(p.getName(), "Kamikaze", 1);
             }
           }
           if (t.hasFlag) {
             dropFlag(t.team);
 
-            if (redFlagTaken && blueFlagTaken && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "progressor")) {
-              Server.achievementManager.updateProgress(p.getName(), "progressor", 1);
+            if (redFlagTaken && blueFlagTaken && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "Progressor")) {
+              Server.achievementManager.updateProgress(p.getName(), "Progressor", 1);
             }
           }
         }
@@ -238,13 +238,13 @@ public class CTFGameMode extends GameMode {
 
     if (killed.size() == 2) {
       World.getWorld().broadcast("- " + p.parseName() + " &egot a &bDouble Kill");
-      if (!Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "double_trouble")) {
-        Server.achievementManager.updateProgress(p.getName(), "double_trouble", 1);
+      if (!Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "Double Trouble")) {
+        Server.achievementManager.updateProgress(p.getName(), "Double Trouble", 1);
       }
     } else if (killed.size() == 3) {
       World.getWorld().broadcast("- " + p.parseName() + " &egot a &bTriple Kill");
       if (!Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "triple_trouble")) {
-        Server.achievementManager.updateProgress(p.getName(), "triple_trouble", 1);
+        Server.achievementManager.updateProgress(p.getName(), "Triple Trouble", 1);
       }
     } else if (killed.size() > 3) {
       World.getWorld().broadcast("- " + p.parseName() + " &egot a &b" + killed.size() + "x Kill");
@@ -646,52 +646,44 @@ public class CTFGameMode extends GameMode {
                   p.incIntAttribute("games");
 
                   // Achievements
-                  if (!Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "enjoy_your_stay")) {
-                    Server.achievementManager.updateProgress(p.getName(), "enjoy_your_stay", 1);
+                  if (!Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "Enjoy Your Stay")) {
+                    Server.achievementManager.updateProgress(p.getName(), "Enjoy Your Stay", 1);
                   }
 
-                  if (p.getIntAttribute("games") >= 100 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "invested")) {
-                    Server.achievementManager.updateProgress(p.getName(), "invested", 1);
+                  if (p.getIntAttribute("games") >= 100 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "Invested")) {
+                    Server.achievementManager.updateProgress(p.getName(), "Invested", 1);
                   }
 
-                  if (p.getIntAttribute("games") >= 500 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "nolife")) {
-                    Server.achievementManager.updateProgress(p.getName(), "nolife", 1);
+                  if (p.getIntAttribute("games") >= 500 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "No-life")) {
+                    Server.achievementManager.updateProgress(p.getName(), "No-life", 1);
                   }
                 }
                 if (p.team == winnerID) {
                   p.incIntAttribute("wins");
 
                   // Achievements
-                  if (!Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "winner")) {
-                    Server.achievementManager.updateProgress(p.getName(), "winner", 1);
+                  if (!Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "Winner")) {
+                    Server.achievementManager.updateProgress(p.getName(), "Winner", 1);
                   }
 
-                  if (p.kills == 0 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "pacifist")) {
-                    Server.achievementManager.updateProgress(p.getName(), "pacifist", 1);
+                  if (p.kills == 0 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "Pacifist")) {
+                    Server.achievementManager.updateProgress(p.getName(), "Pacifist", 1);
                   }
 
-                  if (p.deaths == 0 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "invincible")) {
-                    Server.achievementManager.updateProgress(p.getName(), "invincible", 1);
+                  if (p.deaths == 0 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "Invincible")) {
+                    Server.achievementManager.updateProgress(p.getName(), "Invincible", 1);
                   }
 
-                  if (p.deaths == 0 && p.kills >= 10 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "untouchable")) {
-                    Server.achievementManager.updateProgress(p.getName(), "untouchable", 1);
+                  if (p.deaths == 0 && p.kills >= 10 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "Untouchable")) {
+                    Server.achievementManager.updateProgress(p.getName(), "Untouchable", 1);
                   }
 
-                  if (p.getIntAttribute("wins") >= 100 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "champion")) {
-                    Server.achievementManager.updateProgress(p.getName(), "champion", 1);
+                  if (p.getIntAttribute("wins") >= 100 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "Champion")) {
+                    Server.achievementManager.updateProgress(p.getName(), "Champion", 1);
                   }
 
-                  if (p.getIntAttribute("wins") >= 100 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "champion")) {
-                    Server.achievementManager.updateProgress(p.getName(), "champion", 1);
-                  }
-
-                  if (p.deaths == 0 && p.kills >= 10 && p.captures >= 5 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "unfathomable")) {
-                    Server.achievementManager.updateProgress(p.getName(), "unfathomable", 1);
-                  }
-
-                  if (p.captures >= 5 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "team_carrier")) {
-                    Server.achievementManager.updateProgress(p.getName(), "team_carrier", 1);
+                  if (p.captures >= 5 && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "Team Carrier")) {
+                    Server.achievementManager.updateProgress(p.getName(), "Team Carrier", 1);
                   }
 
                   int redPlayers = 0;
@@ -712,8 +704,8 @@ public class CTFGameMode extends GameMode {
                     enemyTeamCount = redPlayers;
                   }
 
-                  if (enemyTeamCount > enemyTeamCount && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "against_all_odds")) {
-                    Server.achievementManager.updateProgress(p.getName(), "against_all_odds", 1);
+                  if (enemyTeamCount > teamCount && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "Against All Odds")) {
+                    Server.achievementManager.updateProgress(p.getName(), "Against All Odds", 1);
                   }
                 }
 
@@ -1132,12 +1124,12 @@ public class CTFGameMode extends GameMode {
             nominatedMaps.clear();
             endGame();
 
-            if (redCaptures == GameSettings.getInt("MaxCaptures") && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "finishing_touch")) {
-              Server.achievementManager.updateProgress(p.getName(), "finishing_touch", 1);
+            if (redCaptures == GameSettings.getInt("MaxCaptures") && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "Finishing Touch")) {
+              Server.achievementManager.updateProgress(p.getName(), "Finishing Touch", 1);
             }
 
-            if (suddenDeath && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "overtime")) {
-              Server.achievementManager.updateProgress(p.getName(), "overtime", 1);
+            if (suddenDeath && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "Overtime")) {
+              Server.achievementManager.updateProgress(p.getName(), "Overtime", 1);
             }
           } else {
             showScore();
@@ -1151,7 +1143,7 @@ public class CTFGameMode extends GameMode {
     if (x == blueFlagX && y == blueFlagY && z == blueFlagZ) {
       if (p.team == 0) {
         if (!blueFlagTaken) {
-          // blue flag taken
+          // Blue flag taken
           if (getRedPlayers() == 0 || getBluePlayers() == 0) {
             placeBlueFlag();
             p.getActionSender()
@@ -1177,7 +1169,7 @@ public class CTFGameMode extends GameMode {
           }
         }
       } else {
-        // red flag returned
+        // Red flag returned
         if (p.hasFlag && !blueFlagTaken && !blueFlagDropped) {
           World.getWorld()
               .broadcast("- &eRed flag captured by " + p.parseName() + " for the blue" + " team!");
@@ -1194,12 +1186,12 @@ public class CTFGameMode extends GameMode {
             nominatedMaps.clear();
             endGame();
 
-            if (blueCaptures == GameSettings.getInt("MaxCaptures") && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "finishing_touch")) {
-              Server.achievementManager.updateProgress(p.getName(), "finishing_touch", 1);
+            if (blueCaptures == GameSettings.getInt("MaxCaptures") && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "Finishing Touch")) {
+              Server.achievementManager.updateProgress(p.getName(), "Finishing Touch", 1);
             }
 
-            if (suddenDeath && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "overtime")) {
-              Server.achievementManager.updateProgress(p.getName(), "overtime", 1);
+            if (suddenDeath && !Server.achievementManager.hasPlayerEarnedAchievement(p.getName(), "Overtime")) {
+              Server.achievementManager.updateProgress(p.getName(), "Overtime", 1);
             }
           } else {
             showScore();
@@ -1344,8 +1336,8 @@ public class CTFGameMode extends GameMode {
           Server.achievementManager.updateProgress(tagger.getName(), "Tag...", 1);
         }
 
-        if (tagger.getIntAttribute("tags") >= 500 && !Server.achievementManager.hasPlayerEarnedAchievement(tagger.getName(), "...you're it")) {
-          Server.achievementManager.updateProgress(tagger.getName(), "...you're it", 1);
+        if (tagger.getIntAttribute("tags") >= 500 && !Server.achievementManager.hasPlayerEarnedAchievement(tagger.getName(), "...You're it")) {
+          Server.achievementManager.updateProgress(tagger.getName(), "...You're it", 1);
         }
       }
     }

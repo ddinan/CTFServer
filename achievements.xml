@@ -1,105 +1,101 @@
 <achievements>
-    <achievement id="winner">
+    <achievement id="Winner">
         <description>Win your first game</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="champion">
+    <achievement id="Champion">
         <description>Win 100 games</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="pacifist">
+    <achievement id="Pacifist">
         <description>Win a game without killing a single player</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="untouchable">
+    <achievement id="Untouchable">
         <description>Win a game without dying</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="invincible">
+    <achievement id="Invincible">
         <description>Win a game without dying and 10+ kills</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="unfathomable">
-        <description>Win a game with 10+ kills, 5 captures, and without dying</description>
-        <targetProgress>1</targetProgress>
-    </achievement>
-    <achievement id="enjoy_your_stay">
+    <achievement id="Enjoy Your Stay">
         <description>Play your first game</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="invested">
+    <achievement id="Invested">
         <description>Play 100 games</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="nolife">
+    <achievement id="No-life">
         <description>Play 500 games</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="kaboom">
+    <achievement id="Kaboom!">
         <description>Explode your first enemy</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="demoman">
+    <achievement id="Demoman">
         <description>Explode 1000 enemies</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="nobels_finest">
+    <achievement id="Nobel's Finest">
         <description>Explode 5000 enemies</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="team_carrier">
+    <achievement id="Team Carrier">
         <description>Get 5 captures in a single game</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="double_trouble">
+    <achievement id="Double Trouble">
         <description>Explode 2 enemies with the same TNT</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="triple_trouble">
+    <achievement id="Triple Trouble">
         <description>Explode 3 enemies with the same TNT</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="kamikaze">
+    <achievement id="Kamikaze">
         <description>Explode a player by using creeper</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="finishing_touch">
+    <achievement id="Finishing Touch">
         <description>Capture the 5th flag to win the game</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="overtime">
+    <achievement id="Overtime!">
         <description>Capture the flag to win the game in overtime</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="fried">
+    <achievement id="Fried">
         <description>Kill a player with the flamethrower</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="medium_fried">
+    <achievement id="Medium-fried">
         <description>Kill 250 players with the flamethrower</description>
         <targetProgress>250</targetProgress>
     </achievement>
-    <achievement id="deep_fried">
+    <achievement id="Deep-fried">
         <description>Kill 500 players with the flamethrower</description>
         <targetProgress>500</targetProgress>
     </achievement>
-    <achievement id="duelist">
+    <achievement id="Duelist">
         <description>Win your first duel</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="gladiator">
+    <achievement id="Gladiator">
         <description>Win 50 duels</description>
         <targetProgress>50</targetProgress>
     </achievement>
-    <achievement id="bounty_hunter">
+    <achievement id="Bounty Hunter">
         <description>Kill a player with a bounty on their head</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="against_all_odds">
+    <achievement id="Against All Odds">
         <description>Win a game despite having less players on your team than the enemy team</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="touch_grass">
+    <achievement id="Touch Grass">
         <description>Touch grass for the first time</description>
         <targetProgress>1</targetProgress>
     </achievement>
@@ -111,7 +107,7 @@
         <description>Tag 100 players</description>
         <targetProgress>1</targetProgress>
     </achievement>
-    <achievement id="...you're it">
+    <achievement id="...You're It!">
         <description>Tag 500 players</description>
         <targetProgress>1</targetProgress>
     </achievement>
