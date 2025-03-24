@@ -38,6 +38,7 @@ package org.opencraft.server;
 
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import org.opencraft.server.game.impl.GameSettings;
+import org.opencraft.server.model.ClanManager;
 import org.opencraft.server.model.MapController;
 import org.opencraft.server.model.Player;
 import org.opencraft.server.model.Store;
@@ -70,7 +71,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -87,6 +90,9 @@ public final class Server {
   private static ArrayList<String> ipBans = new ArrayList<String>(128);
   private static ArrayList<String> mutes = new ArrayList<String>(128);
   private static ArrayList<String> whitelist = new ArrayList<String>(128);
+  public static ClanManager clanManager;
+
+  public static final Map<String, String> playerClans = new HashMap<>();
   private static Server instance;
 
   private static LinkedList<ConsoleMessage> messages = new LinkedList<ConsoleMessage>();
@@ -129,6 +135,9 @@ public final class Server {
     while ((l = r.readLine()) != null) {
       whitelist.add(l);
     }
+
+    clanManager = new ClanManager();
+    clanManager.loadClans("clans.xml");
 
     MapController.create();
     log("Creating world...");

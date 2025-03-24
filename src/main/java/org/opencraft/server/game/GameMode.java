@@ -104,6 +104,7 @@ public abstract class GameMode {
     registerCommand("blue", BlueCommand.getCommand());
     registerCommand("bounty", BountyCommand.getCommand());
     registerCommand("c", ChatCommand.getCommand());
+    registerCommand("clan", ClanCommand.getCommand());
     registerCommand("clients", ClientsCommand.getCommand());
     registerCommand("coinflip", CoinFlipCommand.getCommand());
     registerCommand("commands", CommandsCommand.getCommand());
