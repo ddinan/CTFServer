@@ -514,7 +514,7 @@ public abstract class GameMode {
     player.lastMessage = message;
     player.lastMessageTime = System.currentTimeMillis();
 
-    // Toggle chat mode ("#", "$", "@player").
+    // Toggle chat mode ("#", "$", "@player", "!").
     if (message.equals("#") && player.isOp()) {
       if (player.chatMode != ChatMode.OPERATOR) {
         player.chatMode = ChatMode.OPERATOR;
@@ -559,6 +559,17 @@ public abstract class GameMode {
         player.getActionSender().sendChatMessage("@name message");
       }
       return;
+    } else if (message.equals("!")) {
+      if (player.chatMode != ChatMode.CLAN) {
+        player.chatMode = ChatMode.CLAN;
+        player
+            .getActionSender()
+            .sendChatMessage("&7Switched to clan chat, say ! again to return to normal.");
+      } else {
+        player.chatMode = ChatMode.DEFAULT;
+        player.getActionSender().sendChatMessage("&7Switched to normal chat.");
+      }
+      return;
     }
 
     ChatMode messageChatMode = player.chatMode;
@@ -601,6 +612,9 @@ public abstract class GameMode {
         break;
       case PRIVATE:
         World.getWorld().sendPM(player, messagePlayer, messageToSend);
+        break;
+      case CLAN:
+        World.getWorld().sendClanChat(player, messageToSend);
         break;
       default:
         String error = null;

@@ -4,5 +4,6 @@ public enum ChatMode {
   DEFAULT,
   TEAM,
   OPERATOR,
-  PRIVATE
+  PRIVATE,
+  CLAN
 }

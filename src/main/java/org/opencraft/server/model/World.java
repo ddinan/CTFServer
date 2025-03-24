@@ -472,6 +472,21 @@ public final class World {
     }
   }
 
+  public void sendClanChat(Player player, String text) {
+    String clanName = Server.playerClans.get(player.getName());
+
+    if (clanName != null && !player.muted) {
+      Server.log(player.getName() + " [clan]:  " + text);
+
+      for (Player t : World.getWorld().getPlayerList().getPlayers()) {
+        // Check if the player is in the same clan and is not ignored by the player
+        if (clanName.equals(Server.playerClans.get(t.getName())) && !t.isIgnored(player)) {
+          t.getActionSender().sendChatMessage("[Clan] " + player.getColoredName() + "&f: " + text);
+        }
+      }
+    }
+  }
+
   public void sendChat(Player player, String message) {
     String chr = player.getNameChar();
     if (player.isVIP() && !player.isOp()) {
