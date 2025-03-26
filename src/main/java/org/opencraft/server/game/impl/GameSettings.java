@@ -12,6 +12,8 @@ public class GameSettings {
   private static final HashMap<String, GameSetting> settings = new HashMap<String, GameSetting>();
 
   static {
+    add("PrimaryTeamColor", TYPE_STRING, "red");
+    add("SecondaryTeamColor", TYPE_STRING, "blue");
     add("MaxCaptures", TYPE_INT, 5);
     add("Chaos", TYPE_BOOLEAN, false);
     add("MaxMines", TYPE_INT, 2);
