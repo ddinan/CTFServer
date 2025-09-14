@@ -108,6 +108,9 @@ public class WebServer {
       HttpContext k = server.createContext("/api/kills", kh);
       k.getFilters().add(new ParameterFilter());
 
+      HttpContext minimapContext = server.createContext("/minimap.png", new MinimapHandler());
+      minimapContext.getFilters().add(new ParameterFilter());
+
       executor = Executors.newCachedThreadPool();
       server.setExecutor(executor);
       server.start();
@@ -474,4 +477,33 @@ public class WebServer {
       }
     }
   }
+
+  static class MinimapHandler implements HttpHandler {
+    public void handle(HttpExchange exchange) throws IOException {
+      try {
+        File minimapFile = new File("minimap.png");
+
+        if (!minimapFile.exists()) {
+          exchange.sendResponseHeaders(404, -1);
+          exchange.close();
+          return;
+        }
+
+        Headers responseHeaders = exchange.getResponseHeaders();
+        responseHeaders.set("Access-Control-Allow-Origin", "*");
+        responseHeaders.set("Content-Type", "image/png");
+        responseHeaders.set("Content-Length", String.valueOf(minimapFile.length()));
+
+        exchange.sendResponseHeaders(200, minimapFile.length());
+        Files.copy(minimapFile.toPath(), exchange.getResponseBody());
+        exchange.getResponseBody().flush();
+        exchange.close();
+      } catch (IOException e) {
+        e.printStackTrace();
+        exchange.sendResponseHeaders(500, -1);
+        exchange.close();
+      }
+    }
+  }
+
 }
