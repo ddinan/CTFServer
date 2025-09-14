@@ -132,6 +132,7 @@ public abstract class GameMode {
     registerCommand("maps", MapListCommand.getCommand());
     registerCommand("mapset", MapSetCommand.getCommand());
     registerCommand("me", MeCommand.getCommand());
+    registerCommand("minimap", MinimapCommand.getCommand());
     registerCommand("mute", MuteCommand.getCommand());
     registerCommand("newgame", NewGameCommand.getCommand());
     registerCommand("no", NoCommand.getCommand());
