@@ -168,42 +168,49 @@ public class CTFGameMode extends GameMode {
     }
 
     ArrayList<Player> killed = new ArrayList<>();
+
     if (lethal) {
-      float px = x + 0.5f, py = y + 0.5f, pz = z + 0.5f;
-      float pr = r + 0.5f;
-      for (Player t : World.getWorld().getPlayerList().getPlayers()) {
-        float tx = (t.getPosition().getX()) / 32f;
-        float ty = (t.getPosition().getY()) / 32f;
-        float tz = (t.getPosition().getZ()) / 32f;
-        if (Math.abs(px - tx) < pr
-            && Math.abs(py - ty) < pr
-            && Math.abs(pz - tz) < pr
-            && (p.team != t.team || (tk && (t == p || !t.hasFlag)))
-            && !t.isSafe()
-            && p.canKill(t, true)
-            && !t.isHidden) {
-          t.markSafe();
-          killed.add(t);
-          p.gotKill(t);
-          t.sendToTeamSpawn();
-          t.died(p);
-          updateKillFeed(
-              p,
-              t,
-              p.parseName()
-                  + " exploded "
-                  + t.getColoredName()
-                  + (type == null ? "" : " &f(" + type + ")"));
-          if (!tk) {
-            checkFirstBlood(p, t);
-          }
-          if (t.team != -1 && t.team != p.team) {
-            p.incIntAttribute("explodes");
-            p.addPoints(5);
-          }
-          if (t.hasFlag) {
-            dropFlag(t.team);
-          }
+      float cx = x + 0.5f;
+      float cy = y + 0.5f;
+      float cz = z + 0.5f;
+      float radius = r + 0.5f;
+
+      for (Player target : World.getWorld().getPlayerList().getPlayers()) {
+        if (!canExplodeKill(p, target, tk)) {
+          continue;
+        }
+
+        if (!isWithinExplosion(cx, cy, cz, radius, target)) {
+          continue;
+        }
+
+        target.markSafe();
+        killed.add(target);
+
+        p.gotKill(target);
+        target.sendToTeamSpawn();
+        target.died(p);
+
+        updateKillFeed(
+            p,
+            target,
+            p.parseName()
+                + " exploded "
+                + target.getColoredName()
+                + (type == null ? "" : " &f(" + type + ")")
+        );
+
+        if (!tk) {
+          checkFirstBlood(p, target);
+        }
+
+        if (target.team != -1 && target.team != p.team) {
+          p.incIntAttribute("explodes");
+          p.addPoints(5);
+        }
+
+        if (target.hasFlag) {
+          dropFlag(target.team);
         }
       }
     }
@@ -251,6 +258,32 @@ public class CTFGameMode extends GameMode {
         player.getActionSender().sendSpawnEffect(Constants.EFFECT_TNT_2, ex, ey, ez, ex, ey, ez);
       }
     }
+  }
+
+  private boolean isWithinExplosion(float cx, float cy, float cz, float radius, Player p) {
+    float playerHitboxSize = GameSettings.getFloat("PlayerHitboxSize") - 1.0f;
+
+    float tx = p.getPosition().getX() / 32f;
+    float ty = p.getPosition().getY() / 32f;
+    float tz = (p.getPosition().getZ() / 32f) - 1; // Feet
+
+    float playerBottom = tz;
+    float playerTop = tz + playerHitboxSize;
+
+    boolean xHit = Math.abs(cx - tx) < radius;
+    boolean yHit = Math.abs(cy - ty) < radius;
+
+    boolean zHit = (cz + radius) >= playerBottom
+        && (cz - radius) <= playerTop;
+
+    return xHit && yHit && zHit;
+  }
+
+  private boolean canExplodeKill(Player p, Player t, boolean tk) {
+    if (t.isHidden || t.isSafe()) return false;
+    if (!p.canKill(t, true)) return false;
+    if (p.team != t.team) return true;
+    return tk && (t == p || !t.hasFlag);
   }
 
   @Override

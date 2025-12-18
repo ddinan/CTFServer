@@ -62,7 +62,8 @@ public class GameSettings {
     add("RocketSpeed", TYPE_INT, 25);
     add("IceMeltTime", TYPE_INT, 60000);
     add("VineDecayTime", TYPE_INT, 30000);
-    add("TNTTime", TYPE_FLOAT, 1.0f);
+    add("TNTTime", TYPE_FLOAT, 0.5f);
+    add("PlayerHitboxSize", TYPE_FLOAT, 2.0f);
   }
 
   public static Object get(String k) {
