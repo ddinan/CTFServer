@@ -80,8 +80,10 @@ public class Player extends Entity implements IPlayer {
   public String partialChatMessage = "";
   public String lastMessage;
   public String announcement = "";
+  public long lastTNTTime;
   public long lastMessageTime;
   public long lastPacketTime;
+  public long lastQuoteTime;
   public int heldBlock = 0;
   public boolean isInSmokeZone = false;
   public boolean joinedDuringTournamentMode;
@@ -91,6 +93,7 @@ public class Player extends Entity implements IPlayer {
   public long moveTime = 0;
   public int team = -1;
   public int outOfBoundsBlockChanges = 0;
+  public int lagTNTs = 0;
   public int placeBlock = -1;
   public boolean placeSolid = false;
   public boolean isHidden = false;
@@ -191,9 +194,7 @@ public class Player extends Entity implements IPlayer {
     }
 
     try {
-      return new Rating(
-          (double) mu,
-          (double) sigma);
+      return new Rating((double) mu, (double) sigma);
     } catch (Exception e) {
       return RatingSystem.Companion.getDefaultRating();
     }
@@ -220,6 +221,24 @@ public class Player extends Entity implements IPlayer {
     setAttribute(name + "RatingMu", rating.getMean());
     setAttribute(name + "RatingSigma", rating.getStandardDeviation());
     incIntAttribute(name + "MatchesCount");
+  }
+
+  public boolean isUsingManualTNT() {
+    Object manualTNT = getAttribute("manualTNT");
+
+    if (manualTNT == null) {
+      return false;
+    }
+
+    return (boolean) manualTNT;
+  }
+
+  public void enableManualTNT() {
+    setAttribute("manualTNT", true);
+  }
+
+  public void disableManualTNT() {
+    setAttribute("manualTNT", false);
   }
 
   public void hideTntParticles() {
@@ -384,7 +403,7 @@ public class Player extends Entity implements IPlayer {
 
   public void ignore(Player p) {
     if (p.isOp()) {
-      getActionSender().sendChatMessage("- &eYou can't ignore operators.");
+      getActionSender().sendChatMessage("- &eYou cannot ignore operators.");
     } else {
       String name = p.name;
       if (!ignorePlayers.contains(name)) {
@@ -427,9 +446,13 @@ public class Player extends Entity implements IPlayer {
   }
 
   public void disableFlameThrower() {
-    World.getWorld().getLevel().clearFire(this, this.linePosition, this.lineRotation);
-    this.flamethrowerEnabled = false;
-    this.getActionSender().sendChatMessage("- &eFlame thrower disabled.");
+    if (flamethrowerEnabled) {
+      if (this.linePosition != null) {
+        World.getWorld().getLevel().clearFire(this, this.linePosition, this.lineRotation);
+      }
+      this.flamethrowerEnabled = false;
+      this.getActionSender().sendChatMessage("- &eFlame thrower disabled.");
+    }
   }
 
   public boolean isFlamethrowerEnabled() {
@@ -947,12 +970,12 @@ public class Player extends Entity implements IPlayer {
 
     String playerSuffix = "";
     if (AFK) {
-      playerSuffix = "    &7(&bAFK&7)";
+      playerSuffix = "    &7(AFK)";
     } else if (muted) {
-      playerSuffix = "    &7(&bMuted&7)";
+      playerSuffix = "    &7(Muted)";
     }
     if (AFK && muted) {
-      playerSuffix = "    &7(&bAFK, Muted&7)";
+      playerSuffix = "    &7(AFK, Muted)";
     }
 
     String listName =
@@ -1022,6 +1045,12 @@ public class Player extends Entity implements IPlayer {
       }
     }
 
+    // Reset lag TNT checker
+    if (lastTNTTime > 0 && System.currentTimeMillis() - lastTNTTime >= 5000) {
+      lagTNTs = 0;
+      lastTNTTime = 0;
+    }
+
     World.getWorld().getGameMode().processPlayerMove(this);
     if (isFlamethrowerEnabled()) {
       int duration = GameSettings.getInt("FlameThrowerDuration");
@@ -1053,16 +1082,19 @@ public class Player extends Entity implements IPlayer {
       }
     } else {
       if (flamethrowerFuel != (float) Constants.FLAME_THROWER_FUEL) {
-        int chargeTime = GameSettings.getInt("FlameThrowerRechargeTime");
-        float rechargeRate = (float) Constants.FLAME_THROWER_FUEL / chargeTime;
-        long time = System.currentTimeMillis();
-        long dt = time - flamethrowerTime;
-        // Recharge rate in seconds, dt in milliseconds
-        flamethrowerFuel += rechargeRate * dt / 1000;
-        flamethrowerTime = time;
-        if (flamethrowerFuel >= Constants.FLAME_THROWER_FUEL) {
-          flamethrowerFuel = Constants.FLAME_THROWER_FUEL;
-          getActionSender().sendChatMessage("- &eFlame thrower charged.");
+        if (GameSettings.getBoolean("AutoRechargeFlamethrower")) {
+          int chargeTime = GameSettings.getInt("FlameThrowerRechargeTime");
+          float rechargeRate = (float) Constants.FLAME_THROWER_FUEL / chargeTime;
+          long time = System.currentTimeMillis();
+          long dt = time - flamethrowerTime;
+          // Recharge rate in seconds, dt in milliseconds
+          flamethrowerFuel += rechargeRate * dt / 1000;
+          flamethrowerTime = time;
+
+          if (flamethrowerFuel >= Constants.FLAME_THROWER_FUEL) {
+            flamethrowerFuel = Constants.FLAME_THROWER_FUEL;
+            getActionSender().sendChatMessage("- &eFlame thrower charged.");
+          }
         }
       }
     }
@@ -1102,7 +1134,7 @@ public class Player extends Entity implements IPlayer {
       if (sendMessage) {
         getActionSender()
             .sendChatMessage(
-                "- &eYou can't kill "
+                "- &eYou cannot kill "
                     + p.parseName()
                     + " since you are"
                     + " dueling "
@@ -1114,12 +1146,12 @@ public class Player extends Entity implements IPlayer {
       if (sendMessage) {
         getActionSender()
             .sendChatMessage(
-                "- &eYou can't kill "
+                "- &eYou cannot kill "
                     + p.parseName()
                     + " since they "
                     + "are dueling "
                     + p.duelPlayer.parseName()
-                    + ". They can't capture your flag or kill "
+                    + ". They cannot capture your flag or kill "
                     + "anyone else right now.");
       }
       return false;

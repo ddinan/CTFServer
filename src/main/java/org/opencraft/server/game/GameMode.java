@@ -99,6 +99,7 @@ public abstract class GameMode {
     registerCommand("accept", DuelAcceptCommand.getCommand());
     registerCommand("achievements", AchievementsCommand.getCommand());
     registerCommand("addspawn", AddSpawnCommand.getCommand());
+    registerCommand("afk", AFKCommand.getCommand());
     registerCommand("b", BlockInfoCommand.getCommand());
     registerCommand("ban", XBanCommand.getCommand());
     registerCommand("banip", BanIPCommand.getCommand());
@@ -171,6 +172,7 @@ public abstract class GameMode {
     registerCommand("store", StoreCommand.getCommand());
     registerCommand("streamermode", StreamerModeCommand.getCommand());
     registerCommand("team", TeamCommand.getCommand());
+    registerCommand("tnt", TNTCommand.getCommand());
     registerCommand("tp", TeleportCommand.getCommand());
     registerCommand("unban", UnbanCommand.getCommand());
     registerCommand("unbanip", UnbanIPCommand.getCommand());
@@ -365,7 +367,7 @@ public abstract class GameMode {
                 player.team = -1;
                 player.hasVoted = false;
                 player.hasNominated = false;
-		player.isCreepering = false;
+		            player.isCreepering = false;
                 player.currentRoundPointsEarned = 0;
                 player.setPoints(GameSettings.getInt("InitialPoints"));
                 player.kills = 0;

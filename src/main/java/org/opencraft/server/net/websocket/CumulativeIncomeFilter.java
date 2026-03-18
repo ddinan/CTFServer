@@ -114,7 +114,7 @@ abstract class CumulativeIncomeFilter extends IoFilterAdapter {
         if (decoded) {
           if (buf.position() == oldPos) {
             throw new IllegalStateException(
-                "doDecode() can't return true when buffer is not consumed.");
+                "doDecode() cannot return true when buffer is not consumed.");
           }
 
           if (!buf.hasRemaining()) {
@@ -151,8 +151,6 @@ abstract class CumulativeIncomeFilter extends IoFilterAdapter {
   private static class ProtocolDecoderOutputImpl extends
       AbstractProtocolDecoderOutput {
     public void flush(NextFilter nextFilter, IoSession session) {
-      Queue<Object> messageQueue = getMessageQueue();
-
       while (!messageQueue.isEmpty()) {
         nextFilter.messageReceived(session, messageQueue.poll());
       }

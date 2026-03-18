@@ -54,7 +54,7 @@ import java.util.Set;
 public class UpdateTask extends ScheduledTask {
 
   /** The delay. */
-  private static final long DELAY = 100;
+  private static final long DELAY = 150;
 
   /** Creates the update task with a delay of 100ms. */
   public UpdateTask() {
@@ -90,7 +90,7 @@ public class UpdateTask extends ScheduledTask {
       }
       if (player.lastPacketTime != 0
           && System.currentTimeMillis() - player.lastPacketTime > 30000) {
-        player.getActionSender().sendLoginFailure("Too much lag`");
+        player.getActionSender().sendLoginFailure("Too much lag");
         player.getSession().close();
       }
     }

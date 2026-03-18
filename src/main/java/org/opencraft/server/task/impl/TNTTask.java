@@ -38,66 +38,34 @@ package org.opencraft.server.task.impl;
 
 import org.opencraft.server.game.impl.CTFGameMode;
 import org.opencraft.server.game.impl.GameSettings;
-import org.opencraft.server.model.Player;
-import org.opencraft.server.model.Position;
 import org.opencraft.server.model.Level;
+import org.opencraft.server.model.Player;
 import org.opencraft.server.model.World;
 import org.opencraft.server.task.ScheduledTask;
 
-/* Does the delayed explosion for creeper item. */
-public class CreeperTask extends ScheduledTask {
-  private static final boolean LETHAL = true;
-  private static final boolean TEAMKILL = true;
-  private static final String NAME = "Creeper";
-
+public class TNTTask extends ScheduledTask {
   private CTFGameMode ctf;
   private Player invoker;
   private Level level;
 
-  public CreeperTask(Player invoker, Level level) {
+  public TNTTask(Player invoker, Level level) {
     super(0);
 
     this.ctf = (CTFGameMode)World.getWorld().getGameMode();
     this.invoker = invoker;
     this.level = level;
 
-    float creeperTime = GameSettings.getFloat("CreeperTime");
-    if (creeperTime > 0.0f) {
-      this.setDelay((long)(1000 * creeperTime));
-    }
+    this.setDelay((long)(1000 * GameSettings.getFloat("TNTTime")));
   }
 
   public void execute() {
-    /* Only explode if:
-     * - the player hasn't died
-     * - the player hasn't changed teams
-     * - the player hasn't rejoined his own team
-     * - the game hasn't ended
-     * - a new game hasn't started
-     * - the player's session hasn't been unregistered */
-    if (
-      invoker.isCreepering
-        && invoker.getSession().getPlayer() != null
-    ) {
-      doCreeper();
-    }
+    Player player = this.invoker;
+    ctf.explodeTNT(player, this.level, player.tntX, player.tntY, player.tntZ, player.tntRadius);
+    player.hasTNT = false;
+    player.tntX = 0;
+    player.tntY = 0;
+    player.tntZ = 0;
 
     this.stop();
-  }
-
-  private void doCreeper() {
-    int radius = GameSettings.getInt("CreeperRadius");
-    if (radius < 0) {
-      radius = 0;
-    }
-
-    Position pos = this.invoker.getPosition().toBlockPos();
-
-    ctf.explodeTNT(
-      this.invoker, this.level, pos.getX(), pos.getY(), pos.getZ(),
-      radius, LETHAL, TEAMKILL, false, true, NAME
-    );
-
-    invoker.isCreepering = false;
   }
 }

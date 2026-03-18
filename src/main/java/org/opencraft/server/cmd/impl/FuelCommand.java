@@ -34,70 +34,26 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.opencraft.server.task.impl;
+package org.opencraft.server.cmd.impl;
 
-import org.opencraft.server.game.impl.CTFGameMode;
-import org.opencraft.server.game.impl.GameSettings;
+import org.opencraft.server.Constants;
+import org.opencraft.server.cmd.Command;
+import org.opencraft.server.cmd.CommandParameters;
 import org.opencraft.server.model.Player;
-import org.opencraft.server.model.Position;
-import org.opencraft.server.model.Level;
-import org.opencraft.server.model.World;
-import org.opencraft.server.task.ScheduledTask;
 
-/* Does the delayed explosion for creeper item. */
-public class CreeperTask extends ScheduledTask {
-  private static final boolean LETHAL = true;
-  private static final boolean TEAMKILL = true;
-  private static final String NAME = "Creeper";
+public class FuelCommand implements Command {
+  private static final FuelCommand INSTANCE = new FuelCommand();
 
-  private CTFGameMode ctf;
-  private Player invoker;
-  private Level level;
-
-  public CreeperTask(Player invoker, Level level) {
-    super(0);
-
-    this.ctf = (CTFGameMode)World.getWorld().getGameMode();
-    this.invoker = invoker;
-    this.level = level;
-
-    float creeperTime = GameSettings.getFloat("CreeperTime");
-    if (creeperTime > 0.0f) {
-      this.setDelay((long)(1000 * creeperTime));
-    }
+  /**
+   * Gets the singleton instance of this command.
+   *
+   * @return The singleton instance of this command.
+   */
+  public static FuelCommand getCommand() {
+    return INSTANCE;
   }
 
-  public void execute() {
-    /* Only explode if:
-     * - the player hasn't died
-     * - the player hasn't changed teams
-     * - the player hasn't rejoined his own team
-     * - the game hasn't ended
-     * - a new game hasn't started
-     * - the player's session hasn't been unregistered */
-    if (
-      invoker.isCreepering
-        && invoker.getSession().getPlayer() != null
-    ) {
-      doCreeper();
-    }
-
-    this.stop();
-  }
-
-  private void doCreeper() {
-    int radius = GameSettings.getInt("CreeperRadius");
-    if (radius < 0) {
-      radius = 0;
-    }
-
-    Position pos = this.invoker.getPosition().toBlockPos();
-
-    ctf.explodeTNT(
-      this.invoker, this.level, pos.getX(), pos.getY(), pos.getZ(),
-      radius, LETHAL, TEAMKILL, false, true, NAME
-    );
-
-    invoker.isCreepering = false;
+  public void execute(final Player player, CommandParameters params) {
+    player.flamethrowerFuel = Constants.FLAME_THROWER_FUEL; // Refill the flamethrower
   }
 }
